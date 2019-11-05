@@ -615,7 +615,7 @@ input, select, textarea {
 	}
 
 	p, ul, ol, dl, table {
-		margin-bottom: 1em;
+		/* margin-bottom: 1em; */
 	}
 
 /* Box */
@@ -2244,7 +2244,7 @@ input, select, textarea {
 /* Intro */
 
 	#intro {
-		background: url("images/overlay.png"), url("../../images/intro.jpg");
+		background: url("images/overlay.png"), url("../../images/sacramento.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, bottom center;
@@ -2254,16 +2254,45 @@ input, select, textarea {
 /* One */
 
 	#one {
-		background: url("images/overlay.png"), url("../../images/one.jpg");
+		background: url("images/overlay.png"), url("../../images/sacramento.jpg");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
 	}
 
+/* Work */
+
 /* Two */
 
 	#two {
 		background: url("images/overlay.png"), url("../../images/two.jpg");
+		background-size: 256px 256px, cover;
+		background-attachment: fixed, fixed;
+		background-position: top left, center center;
+	}
+
+/* Three */
+
+	#three {
+		background: url("images/overlay.png"), url("../../images/yipp.gif");
+		background-size: 256px 256px, cover;
+		background-attachment: fixed, fixed;
+		background-position: top left, center center;
+	}
+
+/* Four */
+
+	#four {
+		background: url("images/overlay.png"), url("../../images/Turbo.gif");
+		background-size: 256px 256px, cover;
+		background-attachment: fixed, fixed;
+		background-position: top left, center center;
+	}
+
+/* Five */
+
+	#five {
+		background: url("images/overlay.png"), url("../../images/GridAlgoPath.gif");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
@@ -2310,3 +2339,118 @@ input, select, textarea {
 			}
 
 		}
+
+	.anisur{
+		width: 20vw;
+		/* width: 280px; */
+		/* height: 280px; */
+		/* height: auto; */
+		/* border: 2px solid #fafafa; */
+		border-radius: 10%;
+		/* margin-right: 50px; */
+		margin-bottom: 10%;
+		background-position: top left, center center;
+	}
+
+	.resume-button{
+		/* font-family: "Open Sans", Helvetica, sans-serif; */
+		font-size: 20px;
+		border: 2px solid whitesmoke !important;
+		color: white !important;
+		text-decoration: none;
+		/* border-bottom: 1px solid #fafafa; */
+		position: relative;
+		bottom: 10px;
+		padding: 9px 10px;
+		border-radius: 3px;
+		text-transform: uppercase;
+		/* letter-spacing: 3px; */
+		font-weight: 700;
+		/* margin-right: 50px; */
+	}
+
+	.resume-button:hover{
+		color: white !important;
+		border: 2px solid white !important;
+		text-decoration: underline;
+		cursor: pointer !important;
+	}
+
+	.abouticons{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.fa-github, .fa-linkedin {
+		/* color: red; */
+		font-size: 60px;
+		color: white !important;
+	}
+
+	.abouticons li{
+		margin: 15px 0px;
+	}
+
+	.abouticons li:last-child{
+		margin: 25px 0px;
+	}
+
+	.pic-icons{
+		margin-right: 3%;
+		text-align: center;
+	}
+
+	/* .git-linked{
+		display: flex;
+		flex-direction: row;
+	} */
+
+	/* @media screen and (max-width: 745px) {
+
+	} */
+	@media screen and (min-width: 745px) {
+		.git-linked{
+			display: flex;
+			flex-direction: row;
+		}
+
+		.git-linked li {
+			margin: 10px 5px
+		}
+
+		.fa-github:hover, .fa-linkedin:hover {
+			color: white !important;
+			cursor: pointer;
+		}
+
+		.fa-github, .fa-linkedin {
+			font-size: 60px;
+			color: #fafafa78 !important;
+		}
+
+		.resume-button{
+			/* font-family: "Open Sans", Helvetica, sans-serif; */
+			font-size: 20px;
+			border: 2px solid whitesmoke !important;
+			color: #fafafa78 !important;
+			text-decoration: none;
+			/* border-bottom: 1px solid #fafafa; */
+			position: relative;
+			bottom: 10px;
+			padding: 9px 10px;
+			border-radius: 3px;
+			text-transform: uppercase;
+			/* letter-spacing: 3px; */
+			font-weight: 700;
+			/* margin-right: 50px; */
+		}
+
+		.abouticons li:last-child{
+			margin: 12px 0px;
+		}
+	}
+
+	/* .git-linked li {
+		margin: 15px 5px
+	} */
