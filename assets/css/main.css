@@ -2265,7 +2265,7 @@ input, select, textarea {
 /* Two */
 
 	#two {
-		background: url("images/overlay.png"), url("../../images/two.jpg");
+		background: url("images/overlay.png"), url("../../images/zbay.gif");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
@@ -2376,11 +2376,7 @@ input, select, textarea {
 		cursor: pointer !important;
 	}
 
-	.abouticons{
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
+
 
 	.fa-github, .fa-linkedin {
 		/* color: red; */
@@ -2389,7 +2385,7 @@ input, select, textarea {
 	}
 
 	.abouticons li{
-		margin: 15px 0px;
+		margin: 35px 0px;
 	}
 
 	.abouticons li:last-child{
@@ -2401,6 +2397,14 @@ input, select, textarea {
 		text-align: center;
 	}
 
+	.abouticons{
+		flex-direction: column;
+		align-items: center;
+		/* margin-left: 15%; */
+	}
+
+
+
 	/* .git-linked{
 		display: flex;
 		flex-direction: row;
@@ -2409,11 +2413,11 @@ input, select, textarea {
 	/* @media screen and (max-width: 745px) {
 
 	} */
-	@media screen and (min-width: 745px) {
-		.git-linked{
+	@media screen and (min-width: 800px) {
+		/* .git-linked{
 			display: flex;
 			flex-direction: row;
-		}
+		} */
 
 		.git-linked li {
 			margin: 10px 5px
@@ -2447,9 +2451,37 @@ input, select, textarea {
 		}
 
 		.abouticons li:last-child{
-			margin: 12px 0px;
+			margin: 12px 10px;
+		}
+
+		.abouticons{
+			flex-direction: column;
+			align-items: center;
+			margin-left: 15%;
+		}
+		/* .abouticons {
+			display: flex;
+			flex-direction: row;
+		} */
+
+		.pic-icons{
+			margin-right: 10%;
+			text-align: center;
+			display: flex;
+			align-items: center;
 		}
 	}
+
+	.title-container{
+		display: flex;
+		justify-content: space-between;
+	}
+
+	/* @media screen and (max-width: 744px) { */
+
+	/* } */
+
+
 
 	/* .git-linked li {
 		margin: 15px 5px
