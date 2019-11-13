@@ -2453,12 +2453,12 @@ input, select, textarea {
 			margin: 10px 5px
 		}
 
-		.fa-github:hover, .fa-linkedin:hover {
+		.fa-github:hover, .fa-linkedin:hover, .fa-angellist:hover {
 			color: white !important;
 			cursor: pointer;
 		}
 
-		.fa-github, .fa-linkedin {
+		.fa-github, .fa-linkedin, .fa-angellist {
 			font-size: 60px;
 			color: #fafafa78 !important;
 		}
