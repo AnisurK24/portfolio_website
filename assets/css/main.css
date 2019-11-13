@@ -2408,7 +2408,7 @@ input, select, textarea {
 
 
 
-	.fa-github, .fa-linkedin {
+	.fa-github, .fa-linkedin .fa-angellist {
 		/* color: red; */
 		font-size: 60px;
 		color: white !important;
