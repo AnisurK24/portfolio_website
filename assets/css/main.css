@@ -2295,7 +2295,7 @@ input, select, textarea {
 /* Two */
 
 	#two {
-		background: url("images/overlay.png"), url("../../images/zbay.gif");
+		background: url("images/overlay.png"), url("../../images/zbay.png");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
@@ -2304,7 +2304,7 @@ input, select, textarea {
 /* Three */
 
 	#three {
-		background: url("images/overlay.png"), url("../../images/yipp.gif");
+		background: url("images/overlay.png"), url("../../images/yipp.png");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
@@ -2313,7 +2313,7 @@ input, select, textarea {
 /* Four */
 
 	#four {
-		background: url("images/overlay.png"), url("../../images/Turbo.gif");
+		background: url("images/overlay.png"), url("../../images/Turbo.png");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
@@ -2322,7 +2322,7 @@ input, select, textarea {
 /* Five */
 
 	#five {
-		background: url("images/overlay.png"), url("../../images/GridAlgoPath.gif");
+		background: url("images/overlay.png"), url("../../images/GridAlgoPath.png");
 		background-size: 256px 256px, cover;
 		background-attachment: fixed, fixed;
 		background-position: top left, center center;
