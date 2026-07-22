@@ -1,45 +1,19 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest } from "next/server";
 import { ANISUR_CONTEXT } from "@/app/lib/context";
+import { checkRateLimit } from "@/app/lib/rate-limit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const MODEL = process.env.ANTHROPIC_MODEL ?? "claude-haiku-4-5-20251001";
 const RATE_LIMIT_PER_HOUR = Number(process.env.CHAT_RATE_LIMIT_PER_HOUR ?? "20");
-const HOUR_MS = 60 * 60 * 1000;
-
-type Bucket = { count: number; resetAt: number };
-const rateLimitStore = new Map<string, Bucket>();
-
 function getClientIp(req: NextRequest): string {
   const xff = req.headers.get("x-forwarded-for");
   if (xff) return xff.split(",")[0]!.trim();
   const xrip = req.headers.get("x-real-ip");
   if (xrip) return xrip.trim();
   return "unknown";
-}
-
-function checkRateLimit(ip: string): {
-  allowed: boolean;
-  remaining: number;
-  resetAt: number;
-} {
-  const now = Date.now();
-  const bucket = rateLimitStore.get(ip);
-  if (!bucket || bucket.resetAt < now) {
-    rateLimitStore.set(ip, { count: 1, resetAt: now + HOUR_MS });
-    return { allowed: true, remaining: RATE_LIMIT_PER_HOUR - 1, resetAt: now + HOUR_MS };
-  }
-  if (bucket.count >= RATE_LIMIT_PER_HOUR) {
-    return { allowed: false, remaining: 0, resetAt: bucket.resetAt };
-  }
-  bucket.count += 1;
-  return {
-    allowed: true,
-    remaining: RATE_LIMIT_PER_HOUR - bucket.count,
-    resetAt: bucket.resetAt,
-  };
 }
 
 type ClientMessage = { role: "user" | "assistant"; content: string };
@@ -56,7 +30,7 @@ export async function POST(req: NextRequest) {
   }
 
   const ip = getClientIp(req);
-  const limit = checkRateLimit(ip);
+  const limit = await checkRateLimit(ip, RATE_LIMIT_PER_HOUR);
   if (!limit.allowed) {
     const minutes = Math.ceil((limit.resetAt - Date.now()) / 60000);
     return new Response(
@@ -68,6 +42,7 @@ export async function POST(req: NextRequest) {
         headers: {
           "content-type": "application/json",
           "x-ratelimit-reset": String(limit.resetAt),
+          "x-ratelimit-backend": limit.backend,
         },
       },
     );
@@ -133,6 +108,7 @@ export async function POST(req: NextRequest) {
       "content-type": "text/plain; charset=utf-8",
       "cache-control": "no-store, no-transform",
       "x-ratelimit-remaining": String(limit.remaining),
+      "x-ratelimit-backend": limit.backend,
     },
   });
 }
