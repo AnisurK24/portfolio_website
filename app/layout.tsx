@@ -3,10 +3,17 @@ import "./globals.css";
 import { Aurora } from "./components/Aurora";
 
 // Absolute base URL for resolving Open Graph and Twitter image paths.
-// Vercel sets VERCEL_URL automatically for preview deployments.
-// Override SITE_URL in production env to "https://anisurkhan.com".
+//
+// Set NEXT_PUBLIC_SITE_URL in production. The host fallbacks below matter
+// because without one of them this resolves to localhost, which silently
+// breaks every link preview: the page still renders fine, so nothing
+// looks wrong until someone shares the URL.
+//
+// Netlify sets URL to the site's primary address at build time; Vercel
+// sets VERCEL_URL for previews.
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.URL ||
   (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 export const metadata: Metadata = {
