@@ -69,7 +69,13 @@ Salesforce, QuickBooks, HubSpot, USAePay, Quire, Regrid, Pendo, Mailgun.
 
 Anisur runs a Claude-based automation system locally using Claude Code with custom hooks, skills, and MCP servers. He uses the Claude API and GitHub Copilot daily in development work.
 
-He is shipping transcript-insights, a multi-agent meeting transcript analyzer powered by Claude. Three specialized Claude agents run in parallel against a transcript and produce structured outputs: decisions and action items, business context, interpersonal dynamics. Schema-validated with Zod and retry-on-validation-failure.
+He built and published transcript-insights, a multi-agent meeting transcript analyzer powered by Claude. Source: github.com/AnisurK24/transcript-insights.
+
+Three specialized Claude agents run in parallel against the same transcript and produce structured output: decisions and action items, business context, and interpersonal dynamics. A full run takes about ten seconds.
+
+Output is validated twice. First against a Zod schema for shape, with retry on failure that feeds the specific validation error back to the model. Then against the transcript itself for grounding: an agent that quotes something nobody said, stitches a quote together from two different speakers, names a person who was not in the meeting, or dates a deadline the transcript never gives, is sent back with the specific problem and asked to correct it. This came from watching the tool invent deadlines from phrases like "I'll review tomorrow."
+
+The repo has 71 tests, an architecture document covering the design tradeoffs, and committed sample output so a reader can see what it produces without running it. Streaming output and VTT/CSV transcript support are not built yet.
 
 # Stack
 
