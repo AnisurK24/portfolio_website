@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0a0b;
+  --color-bg-elevated: #131316;
+  --color-fg: #e9e9ea;
+  --color-fg-muted: #9b9ba0;
+  --color-fg-subtle: #6c6c72;
+  --color-accent: #7dd3fc;
+  --color-accent-soft: #38bdf8;
+  --color-border: #232328;
+  --color-border-soft: #1a1a1d;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* Light theme override. Toggled via data-theme attribute on <html>. */
+:root[data-theme="light"] {
+  --color-bg: #fafafa;
+  --color-bg-elevated: #ffffff;
+  --color-fg: #14141a;
+  --color-fg-muted: #5a5a64;
+  --color-fg-subtle: #8a8a93;
+  --color-accent: #0284c7;
+  --color-accent-soft: #0369a1;
+  --color-border: #e4e4e9;
+  --color-border-soft: #efeff2;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+/* Scroll-triggered reveal animation. Components add the `reveal` class and
+   toggle `is-visible` when they enter the viewport via IntersectionObserver. */
+.reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  will-change: opacity, transform;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- Aurora background ---------- */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  /* Slight contrast bump to keep content readable */
+  background:
+    radial-gradient(ellipse at top, color-mix(in oklab, var(--color-bg) 92%, transparent), var(--color-bg) 70%);
+}
+
+.aurora__orb {
+  position: absolute;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 50%;
+  filter: blur(120px);
+  will-change: transform, opacity;
+  opacity: 0.35;
+}
+
+:root[data-theme="light"] .aurora__orb {
+  opacity: 0.4;
+  filter: blur(140px);
+}
+
+.aurora__orb--1 {
+  top: -20%;
+  left: -10%;
+  background: radial-gradient(circle, #7dd3fc 0%, transparent 60%);
+  animation: aurora-drift-1 28s ease-in-out infinite;
+}
+
+.aurora__orb--2 {
+  top: 30%;
+  right: -25%;
+  background: radial-gradient(circle, #818cf8 0%, transparent 60%);
+  animation: aurora-drift-2 34s ease-in-out infinite;
+}
+
+.aurora__orb--3 {
+  bottom: -25%;
+  left: 25%;
+  background: radial-gradient(circle, #c084fc 0%, transparent 60%);
+  animation: aurora-drift-3 40s ease-in-out infinite;
+}
+
+:root[data-theme="light"] .aurora__orb--1 {
+  background: radial-gradient(circle, #38bdf8 0%, transparent 60%);
+}
+:root[data-theme="light"] .aurora__orb--2 {
+  background: radial-gradient(circle, #6366f1 0%, transparent 60%);
+}
+:root[data-theme="light"] .aurora__orb--3 {
+  background: radial-gradient(circle, #a855f7 0%, transparent 60%);
+}
+
+@keyframes aurora-drift-1 {
+  0%   { transform: translate(0, 0) scale(1); }
+  33%  { transform: translate(10vw, 8vh) scale(1.1); }
+  66%  { transform: translate(-6vw, 14vh) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes aurora-drift-2 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-12vw, 6vh) scale(1.05); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes aurora-drift-3 {
+  0%   { transform: translate(0, 0) scale(1); }
+  40%  { transform: translate(8vw, -10vh) scale(1.08); }
+  70%  { transform: translate(-4vw, -4vh) scale(0.92); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora__orb {
+    animation: none;
+  }
+}
+
+/* Subtle mouse-position glow on cards. Activated by setting --x and --y CSS
+   custom properties on the element via JS or pointer events. Optional. */
+.card-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-glow::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle 240px at var(--x, 50%) var(--y, 50%),
+    color-mix(in oklab, var(--color-accent) 12%, transparent),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-glow:hover::before {
+  opacity: 1;
+}
