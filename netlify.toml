@@ -1,0 +1,17 @@
+# Netlify build configuration.
+#
+# The plugin declaration is the important line. Netlify normally detects
+# Next.js and installs this plugin itself, but that detection is skipped
+# once a build command and publish directory are set explicitly on the
+# site. Without the plugin, a build "succeeds" and publishes the raw
+# .next directory as static files, so every route 404s.
+#
+# Declaring it here means the setup does not depend on detection, and it
+# lives in the repo rather than in dashboard settings nobody can see.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
