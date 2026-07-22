@@ -27,24 +27,40 @@ npm start
 
 ## Deploy
 
-### Vercel (recommended)
+Live at https://www.anisurkhan.com, hosted on Netlify. The domain is
+registered at Namecheap with DNS delegated to Netlify.
 
-1. Push to `main`.
-2. Import the repo at vercel.com.
-3. Add the `anisurkhan.com` custom domain in Vercel settings.
+Pushes to `main` build automatically. To deploy by hand:
 
-Vercel auto-detects Next.js and configures everything.
+```bash
+npx netlify-cli deploy --build --prod
+```
 
-### GitHub Pages (static export)
+### Environment variables
 
-If you want to keep this on GitHub Pages:
+Set these on the host, not just in `.env.local`:
 
-1. Uncomment `output: 'export'` in `next.config.mjs`.
-2. Run `npm run build`. This produces an `out/` folder.
-3. Either commit `out/` to a `gh-pages` branch, or set up a GitHub Actions workflow to deploy on push.
+| Variable | Required | Notes |
+| --- | --- | --- |
+| `ANTHROPIC_API_KEY` | yes | Chat returns a 500 without it. Store as a secret. |
+| `NEXT_PUBLIC_SITE_URL` | yes | Without it `metadataBase` falls back to localhost and every link preview breaks, silently: pages still render fine. |
+| `ANTHROPIC_MODEL` | no | Defaults to `claude-haiku-4-5`. |
+| `CHAT_RATE_LIMIT_PER_HOUR` | no | Defaults to 20. |
 
-Note: Some Next.js features like server components, API routes, and Image
-optimization are limited or unavailable in static export mode.
+After changing any of these, redeploy: environment changes do not apply to
+existing deploys.
+
+### Why not GitHub Pages
+
+The chat route is a real server endpoint, so a static export fails on it:
+
+```
+Error: export const dynamic = "force-dynamic" on page "/api/chat"
+cannot be used with "output: export"
+```
+
+Calling the Anthropic API from the browser instead would put the API key in
+client-side JavaScript on a public site, so the server route stays.
 
 ## Updating content
 
