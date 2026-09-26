@@ -1,179 +1,277 @@
 @import "tailwindcss";
 
-@theme {
-  --color-bg: #0a0a0b;
-  --color-bg-elevated: #131316;
-  --color-fg: #e9e9ea;
-  --color-fg-muted: #9b9ba0;
-  --color-fg-subtle: #6c6c72;
-  --color-accent: #7dd3fc;
-  --color-accent-soft: #38bdf8;
-  --color-border: #232328;
-  --color-border-soft: #1a1a1d;
+/*
+  Color story: the page is one muted, warm-dark world whose ground shifts
+  field by field as you scroll (stone, olive, ink, graphite, coral).
+  Each section declares its field with data-field; FieldObserver copies the
+  active field onto <html> so the body cross-fades. Without JS, every
+  section paints its own field, so nothing depends on the script.
+*/
 
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+@theme {
+  --color-stone: #5f5a54;
+  --color-olive: #42463a;
+  --color-ink: #141513;
+  --color-graphite: #22262a;
+  --color-umber: #3a3632;
+  --color-coral: #ff6b3d;
+  --color-paper: #f3f1ec;
+
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Light theme override. Toggled via data-theme attribute on <html>. */
-:root[data-theme="light"] {
-  --color-bg: #fafafa;
-  --color-bg-elevated: #ffffff;
-  --color-fg: #14141a;
-  --color-fg-muted: #5a5a64;
-  --color-fg-subtle: #8a8a93;
-  --color-accent: #0284c7;
-  --color-accent-soft: #0369a1;
-  --color-border: #e4e4e9;
-  --color-border-soft: #efeff2;
+:root {
+  --page-bg: var(--color-stone);
+  --page-fg: var(--color-paper);
+  --page-accent: var(--color-coral);
+  --page-accent-fg: var(--color-ink);
+  color-scheme: dark;
+}
+
+/* Field tokens. Applied to sections (no-JS paint) and to <html> (JS story). */
+[data-field="stone"] { --field-bg: var(--color-stone); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
+[data-field="olive"] { --field-bg: var(--color-olive); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
+[data-field="ink"] { --field-bg: var(--color-ink); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
+[data-field="graphite"] { --field-bg: var(--color-graphite); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
+[data-field="umber"] { --field-bg: var(--color-umber); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
+[data-field="coral"] { --field-bg: var(--color-coral); --field-fg: var(--color-ink); --field-accent: var(--color-ink); --field-accent-fg: var(--color-paper); }
+
+section[data-field] {
+  background: var(--field-bg);
+  color: var(--field-fg);
+}
+
+html.story section[data-field] {
+  background: transparent;
+  transition: color 700ms var(--ease-out-strong);
+}
+
+html.story {
+  --page-bg: var(--active-bg, var(--color-stone));
+  --page-fg: var(--active-fg, var(--color-paper));
+  --page-accent: var(--active-accent, var(--color-coral));
+  --page-accent-fg: var(--active-accent-fg, var(--color-ink));
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+  background: var(--page-bg);
 }
 
 body {
-  background: var(--color-bg);
-  color: var(--color-fg);
+  background: var(--page-bg);
+  color: var(--page-fg);
   font-family: var(--font-sans);
-  font-feature-settings: "ss01", "cv01", "cv11";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition:
+    background-color 700ms var(--ease-out-strong),
+    color 700ms var(--ease-out-strong);
+  overflow-x: clip;
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-bg);
+  background: var(--color-coral);
+  color: var(--color-ink);
 }
 
-/* Scroll-triggered reveal animation. Components add the `reveal` class and
-   toggle `is-visible` when they enter the viewport via IntersectionObserver. */
+:focus-visible {
+  outline: 2px solid var(--page-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.muted {
+  color: color-mix(in oklab, currentColor 82%, transparent);
+}
+
+.display {
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 3.25rem;
+  padding: 0 1.4rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  transition:
+    transform 160ms var(--ease-out-strong),
+    background-color 200ms ease,
+    color 200ms ease;
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn-accent {
+  background: var(--page-accent);
+  color: var(--page-accent-fg);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-accent:hover {
+    background: color-mix(in oklab, var(--page-accent) 88%, white);
+  }
+  .btn-accent:hover .btn-arrow {
+    transform: translateX(3px);
+  }
+}
+.btn-arrow {
+  transition: transform 200ms var(--ease-out-strong);
+}
+
+/* ---------- Hero entrance ---------- */
+.rise {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+.rise > span {
+  display: block;
+  animation: rise 1000ms var(--ease-out-expo) both;
+  animation-delay: calc(120ms + var(--i, 0) * 90ms);
+}
+@keyframes rise {
+  from { transform: translateY(105%); }
+  to { transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fade-up 900ms var(--ease-out-expo) both;
+  animation-delay: calc(120ms + var(--i, 0) * 90ms);
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.portrait-in {
+  animation: portrait-in 1400ms var(--ease-out-expo) 200ms both;
+}
+@keyframes portrait-in {
+  from { opacity: 0; transform: translateY(40px) scale(1.03); filter: blur(10px); }
+  to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+/* Portrait drifts up slower than the page as the hero scrolls away. */
+@supports (animation-timeline: view()) {
+  .hero-drift {
+    animation: hero-drift linear both;
+    animation-timeline: view();
+    animation-range: exit 0% exit 100%;
+  }
+  @keyframes hero-drift {
+    to { transform: translateY(18%); opacity: 0.35; }
+  }
+}
+
+/* ---------- Scroll reveal (used by ScrollReveal) ---------- */
 .reveal {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-  will-change: opacity, transform;
+  transform: translateY(18px);
+  transition:
+    opacity 800ms var(--ease-out-expo),
+    transform 800ms var(--ease-out-expo);
 }
-
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
+/* Image reveal: wipes up from the bottom edge. */
+.wipe {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1100ms var(--ease-out-expo);
+}
+.is-visible .wipe,
+.wipe.is-visible {
+  clip-path: inset(0 0 0 0);
 }
 
-/* ---------- Aurora background ---------- */
-.aurora {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  overflow: hidden;
-  /* Slight contrast bump to keep content readable */
-  background:
-    radial-gradient(ellipse at top, color-mix(in oklab, var(--color-bg) 92%, transparent), var(--color-bg) 70%);
+/* ---------- Integration map ---------- */
+.map-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition:
+    stroke-dashoffset 1200ms var(--ease-out-expo),
+    stroke 300ms ease,
+    opacity 300ms ease;
+  transition-delay: calc(var(--i, 0) * 70ms), 0ms, 0ms;
 }
-
-.aurora__orb {
-  position: absolute;
-  width: 60vmax;
-  height: 60vmax;
-  border-radius: 50%;
-  filter: blur(120px);
-  will-change: transform, opacity;
-  opacity: 0.35;
+.map-on .map-line {
+  stroke-dashoffset: 0;
 }
-
-:root[data-theme="light"] .aurora__orb {
-  opacity: 0.4;
-  filter: blur(140px);
-}
-
-.aurora__orb--1 {
-  top: -20%;
-  left: -10%;
-  background: radial-gradient(circle, #7dd3fc 0%, transparent 60%);
-  animation: aurora-drift-1 28s ease-in-out infinite;
-}
-
-.aurora__orb--2 {
-  top: 30%;
-  right: -25%;
-  background: radial-gradient(circle, #818cf8 0%, transparent 60%);
-  animation: aurora-drift-2 34s ease-in-out infinite;
-}
-
-.aurora__orb--3 {
-  bottom: -25%;
-  left: 25%;
-  background: radial-gradient(circle, #c084fc 0%, transparent 60%);
-  animation: aurora-drift-3 40s ease-in-out infinite;
-}
-
-:root[data-theme="light"] .aurora__orb--1 {
-  background: radial-gradient(circle, #38bdf8 0%, transparent 60%);
-}
-:root[data-theme="light"] .aurora__orb--2 {
-  background: radial-gradient(circle, #6366f1 0%, transparent 60%);
-}
-:root[data-theme="light"] .aurora__orb--3 {
-  background: radial-gradient(circle, #a855f7 0%, transparent 60%);
-}
-
-@keyframes aurora-drift-1 {
-  0%   { transform: translate(0, 0) scale(1); }
-  33%  { transform: translate(10vw, 8vh) scale(1.1); }
-  66%  { transform: translate(-6vw, 14vh) scale(0.95); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-@keyframes aurora-drift-2 {
-  0%   { transform: translate(0, 0) scale(1); }
-  50%  { transform: translate(-12vw, 6vh) scale(1.05); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-@keyframes aurora-drift-3 {
-  0%   { transform: translate(0, 0) scale(1); }
-  40%  { transform: translate(8vw, -10vh) scale(1.08); }
-  70%  { transform: translate(-4vw, -4vh) scale(0.92); }
-  100% { transform: translate(0, 0) scale(1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .aurora__orb {
-    animation: none;
-  }
-}
-
-/* Subtle mouse-position glow on cards. Activated by setting --x and --y CSS
-   custom properties on the element via JS or pointer events. Optional. */
-.card-glow {
-  position: relative;
-  overflow: hidden;
-}
-
-.card-glow::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle 240px at var(--x, 50%) var(--y, 50%),
-    color-mix(in oklab, var(--color-accent) 12%, transparent),
-    transparent 60%
-  );
+.map-node {
   opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
+  transform: scale(0.9);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    opacity 600ms var(--ease-out-expo),
+    transform 600ms var(--ease-out-expo);
+  transition-delay: calc(300ms + var(--i, 0) * 70ms);
+}
+.map-on .map-node {
+  opacity: 1;
+  transform: none;
 }
 
-.card-glow:hover::before {
-  opacity: 1;
+/* ---------- Work stack ---------- */
+/* Sticky stacking only where a whole card fits under the nav. Every card
+   gets the same height while stacking, so a covered card never peeks out
+   below a shorter one and the stack leaves the screen in order. */
+@media (min-width: 1280px) and (min-height: 800px) {
+  .stack-card {
+    position: sticky;
+    top: calc(88px + var(--i, 0) * 14px);
+  }
+  .stack-card > article {
+    height: min(600px, calc(100dvh - 180px));
+  }
+}
+
+/* ---------- Marquee (one per page) ---------- */
+.marquee-track {
+  animation: marquee 48s linear infinite;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+@media (hover: hover) {
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  body, html.story section[data-field] { transition: none; }
+  .rise > span, .fade-up, .portrait-in, .hero-drift { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .wipe { clip-path: none; transition: none; }
+  .map-line { stroke-dashoffset: 0; transition: none; }
+  .map-node { opacity: 1; transform: none; transition: none; }
+  .marquee-track { animation: none; }
+}
+
+.hero-caret {
+  animation: caret-blink 1.05s steps(1, end) infinite;
+}
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-caret { animation: none; }
 }

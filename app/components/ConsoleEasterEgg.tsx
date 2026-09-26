@@ -15,9 +15,9 @@ export function ConsoleEasterEgg() {
     if (typeof window === "undefined") return;
     if (sessionStorage.getItem("easter_egg_shown") === "1") return;
 
-    const big = "font-size: 14px; font-family: ui-monospace, Menlo, monospace; color: #7dd3fc;";
+    const big = "font-size: 14px; font-family: ui-monospace, Menlo, monospace; color: #ff6b3d;";
     const muted = "color: #9b9ba0; font-family: ui-sans-serif, system-ui;";
-    const accent = "color: #7dd3fc; font-family: ui-sans-serif, system-ui;";
+    const accent = "color: #ff6b3d; font-family: ui-sans-serif, system-ui;";
     const heavy = "color: #e9e9ea; font-weight: 600; font-family: ui-sans-serif, system-ui;";
 
     console.log(`%c${ART}`, big);

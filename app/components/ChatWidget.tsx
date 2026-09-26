@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ArrowUp, Sparkle, X } from "@phosphor-icons/react";
 
 type Message = { role: "user" | "assistant"; content: string };
 
@@ -107,112 +108,102 @@ export function ChatWidget() {
   return (
     <>
       <button
-        aria-label="Open AI chat about Anisur"
+        aria-label={open ? "Close AI chat" : "Open AI chat about Anisur"}
+        aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-[color:var(--color-border)] bg-[color:var(--color-bg-elevated)] text-[color:var(--color-fg)] shadow-lg transition-all hover:scale-105 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
+        className="fixed bottom-5 right-5 z-50 inline-flex h-12 items-center gap-2 rounded-full bg-[var(--color-ink)] pl-4 pr-5 text-[15px] font-semibold text-[var(--color-paper)] shadow-[0_10px_30px_-8px_rgba(0,0,0,0.55)] ring-1 ring-white/10 transition-transform duration-150 ease-out active:scale-[0.97] md:bottom-6 md:right-6"
       >
-        {open ? (
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        ) : (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-          </svg>
-        )}
+        {open ? <X size={18} weight="bold" /> : <Sparkle size={18} weight="fill" className="text-[var(--color-coral)]" />}
+        {open ? "Close" : "Ask my AI"}
       </button>
 
-      {open && (
-        <div
-          role="dialog"
-          aria-label="Chat about Anisur"
-          className="fixed bottom-24 right-6 z-50 flex h-[min(560px,75vh)] w-[min(380px,calc(100vw-3rem))] flex-col rounded-xl border border-[color:var(--color-border)] bg-[color:var(--color-bg-elevated)] shadow-2xl"
-        >
-          <header className="flex items-center justify-between border-b border-[color:var(--color-border)] px-4 py-3">
-            <div>
-              <h2 className="text-sm font-medium text-[color:var(--color-fg)]">
-                Ask my AI
-              </h2>
-              <p className="text-xs text-[color:var(--color-fg-subtle)]">
-                Grounded in Anisur&apos;s resume. Streamed via Claude.
-              </p>
-            </div>
-          </header>
+      <div
+        role="dialog"
+        aria-label="Chat about Anisur"
+        inert={!open}
+        className={`fixed bottom-20 right-4 z-50 flex h-[min(560px,72dvh)] w-[min(400px,calc(100vw-2rem))] origin-bottom-right flex-col overflow-hidden rounded-2xl bg-[var(--color-ink)] text-[var(--color-paper)] shadow-[0_24px_60px_-12px_rgba(0,0,0,0.6)] ring-1 ring-white/10 transition-[opacity,transform] duration-200 ease-[var(--ease-out-strong)] md:bottom-[5.5rem] md:right-6 ${
+          open ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"
+        }`}
+      >
+        <header className="border-b border-white/10 px-5 py-4">
+          <h2 className="text-[15px] font-semibold">Ask about Anisur</h2>
+          <p className="mt-0.5 text-[13px] text-white/60">
+            Grounded in his resume. Answers stream from Claude.
+          </p>
+        </header>
 
-          <div className="flex-1 overflow-y-auto px-4 py-3 text-sm">
-            {messages.map((m, i) => (
+        <div className="flex-1 overflow-y-auto px-4 py-4 text-[15px] leading-relaxed">
+          {messages.map((m, i) => (
+            <div key={i} className={m.role === "user" ? "mb-3 flex justify-end" : "mb-3 flex justify-start"}>
               <div
-                key={i}
                 className={
                   m.role === "user"
-                    ? "mb-3 flex justify-end"
-                    : "mb-3 flex justify-start"
+                    ? "max-w-[85%] rounded-2xl rounded-br-md bg-[var(--color-coral)] px-3.5 py-2.5 text-[var(--color-ink)]"
+                    : "max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-bl-md bg-white/[0.07] px-3.5 py-2.5"
                 }
               >
-                <div
-                  className={
-                    m.role === "user"
-                      ? "max-w-[85%] rounded-lg bg-[color:var(--color-accent)] px-3 py-2 text-[color:var(--color-bg)]"
-                      : "max-w-[85%] rounded-lg border border-[color:var(--color-border-soft)] bg-[color:var(--color-bg)] px-3 py-2 text-[color:var(--color-fg)]"
-                  }
-                >
-                  {m.content || (m.role === "assistant" && streaming ? "…" : "")}
-                </div>
+                {m.content || (m.role === "assistant" && streaming ? (
+                  <span className="inline-flex gap-1 py-1" aria-label="Thinking">
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/60" />
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/60 [animation-delay:150ms]" />
+                    <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white/60 [animation-delay:300ms]" />
+                  </span>
+                ) : "")}
               </div>
-            ))}
-            <div ref={messagesEndRef} />
-            {error && (
-              <div className="mt-2 rounded-md border border-rose-900/40 bg-rose-950/30 px-3 py-2 text-xs text-rose-300">
-                {error}
+            </div>
+          ))}
+          <div ref={messagesEndRef} />
+          {error && (
+            <div role="alert" className="mt-2 rounded-xl bg-[#3a1f18] px-3.5 py-2.5 text-sm text-[#ffc2ad]">
+              {error}. Try again, or email anisurk24@gmail.com.
+            </div>
+          )}
+          {messages.length <= 1 && (
+            <div className="mt-5">
+              <p className="mb-2 text-[13px] text-white/60">Try asking</p>
+              <div className="flex flex-wrap gap-2">
+                {SUGGESTED.map((q) => (
+                  <button
+                    key={q}
+                    onClick={() => send(q)}
+                    disabled={streaming}
+                    className="rounded-full border border-white/15 px-3 py-1.5 text-[13px] text-white/85 transition-colors hover:border-[var(--color-coral)] hover:text-[var(--color-coral)] disabled:opacity-50"
+                  >
+                    {q}
+                  </button>
+                ))}
               </div>
-            )}
-            {messages.length <= 1 && (
-              <div className="mt-4">
-                <p className="mb-2 text-xs text-[color:var(--color-fg-subtle)]">
-                  Try asking
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {SUGGESTED.map((q) => (
-                    <button
-                      key={q}
-                      onClick={() => send(q)}
-                      disabled={streaming}
-                      className="rounded-full border border-[color:var(--color-border-soft)] px-2.5 py-1 text-xs text-[color:var(--color-fg-muted)] transition-colors hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] disabled:opacity-50"
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              send(input);
-            }}
-            className="flex gap-2 border-t border-[color:var(--color-border)] p-3"
-          >
-            <input
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask a question..."
-              disabled={streaming}
-              className="flex-1 rounded-md border border-[color:var(--color-border)] bg-[color:var(--color-bg)] px-3 py-2 text-sm text-[color:var(--color-fg)] placeholder:text-[color:var(--color-fg-subtle)] focus:border-[color:var(--color-accent)] focus:outline-none disabled:opacity-50"
-            />
-            <button
-              type="submit"
-              disabled={streaming || !input.trim()}
-              className="rounded-md bg-[color:var(--color-accent)] px-3 py-2 text-sm font-medium text-[color:var(--color-bg)] transition-opacity hover:opacity-90 disabled:opacity-50"
-            >
-              Send
-            </button>
-          </form>
+            </div>
+          )}
         </div>
-      )}
+
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            send(input);
+          }}
+          className="flex gap-2 border-t border-white/10 p-3"
+        >
+          <label htmlFor="chat-input" className="sr-only">Your question</label>
+          <input
+            id="chat-input"
+            ref={inputRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Ask a question"
+            disabled={streaming}
+            className="min-w-0 flex-1 rounded-full bg-white/[0.07] px-4 py-2.5 text-base text-[var(--color-paper)] placeholder:text-white/55 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-coral)] disabled:opacity-50"
+          />
+          <button
+            type="submit"
+            aria-label="Send"
+            disabled={streaming || !input.trim()}
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[var(--color-coral)] text-[var(--color-ink)] transition-[transform,opacity] duration-150 active:scale-[0.95] disabled:opacity-40"
+          >
+            <ArrowUp size={18} weight="bold" />
+          </button>
+        </form>
+      </div>
     </>
   );
 }

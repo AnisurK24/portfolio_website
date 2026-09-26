@@ -1,423 +1,565 @@
+import { ArrowRight, ArrowUpRight, GithubLogo, LinkedinLogo, FilePdf } from "@phosphor-icons/react/dist/ssr";
 import { ChatWidget } from "@/app/components/ChatWidget";
-import { CommandPalette } from "@/app/components/CommandPalette";
 import { ConsoleEasterEgg } from "@/app/components/ConsoleEasterEgg";
-import { GitHubActivity } from "@/app/components/GitHubActivity";
-import { GlowCard } from "@/app/components/GlowCard";
+import { CopyEmail } from "@/app/components/CopyEmail";
+import { FieldObserver } from "@/app/components/FieldObserver";
+import { HeroTyper } from "@/app/components/HeroTyper";
+import { IntegrationMap, type Specialty } from "@/app/components/IntegrationMap";
+import { Nav } from "@/app/components/Nav";
+import { Portrait } from "@/app/components/Portrait";
 import { ScrollReveal } from "@/app/components/ScrollReveal";
-import { ThemeToggle } from "@/app/components/ThemeToggle";
-import { Typewriter } from "@/app/components/Typewriter";
+import { Skills, type Skill } from "@/app/components/Skills";
+
+const EMAIL = "anisurk24@gmail.com";
 
 export default function Home() {
   return (
     <>
-      <main className="mx-auto max-w-3xl px-6 py-16 sm:py-24">
-        <span id="__top__" />
-        <Header />
+      <FieldObserver />
+      <Nav />
+      <main>
         <Hero />
         <About />
-        <Specialties />
-        <GitHubActivity />
-        <Work />
+        <SkillsSection />
         <Stack />
+        <WhatIDo />
+        <Work />
         <Contact />
-        <Footer />
       </main>
-      <CommandPalette />
       <ChatWidget />
       <ConsoleEasterEgg />
     </>
   );
 }
 
-function Header() {
+const shell = "mx-auto w-full max-w-[1400px] px-5 md:px-10";
+
+function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
-    <nav className="mb-16 flex items-center justify-between text-sm">
-      <a
-        href="#__top__"
-        className="font-medium tracking-tight text-[color:var(--color-fg)] hover:text-[color:var(--color-accent)] transition-colors"
-      >
-        ak
-      </a>
-      <div className="flex items-center gap-5 text-[color:var(--color-fg-muted)]">
-        <a href="#work" className="hover:text-[color:var(--color-fg)] transition-colors">Work</a>
-        <a href="#stack" className="hover:text-[color:var(--color-fg)] transition-colors">Stack</a>
-        <a href="#contact" className="hover:text-[color:var(--color-fg)] transition-colors">Contact</a>
-        <a
-          href="/Anisur_Khan_Resume.pdf"
-          className="rounded-full border border-[color:var(--color-border)] px-3 py-1 hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] transition-colors"
-        >
-          Resume
-        </a>
-        <ThemeToggle />
-      </div>
-    </nav>
+    <h2 className="display mb-12 max-w-[16ch] text-balance text-[clamp(2.75rem,6.5vw,5.5rem)] md:mb-16">
+      {children}
+    </h2>
   );
 }
+
+/* ------------------------------------------------------------------ */
 
 function Hero() {
   return (
-    <ScrollReveal as="section" className="mb-20">
-      <div className="mb-6 flex items-center gap-2 text-sm text-[color:var(--color-fg-muted)]">
-        <span className="relative flex h-2 w-2">
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-          <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-        </span>
-        Open to senior full-stack and integrations roles
+    <section
+      id="top"
+      data-field="stone"
+      className="relative flex min-h-[100dvh] flex-col overflow-clip pt-16 md:pt-[72px]"
+    >
+      <div className={`${shell} relative z-10 flex flex-1 flex-col justify-center pb-10 pt-10 lg:pb-16`}>
+        <p className="fade-up text-xl leading-snug md:text-2xl" style={{ ["--i" as string]: 0 }}>
+          Hello, I&apos;m Anisur Khan.
+          <br />
+          I build
+        </p>
+
+        <h1 className="display mt-5 text-[11vw] sm:text-[clamp(3.4rem,8.3vw,8.25rem)] md:mt-7">
+          <span className="rise" style={{ ["--i" as string]: 1 }}>
+            <span>Integrations.</span>
+          </span>
+          <span className="rise" style={{ ["--i" as string]: 2 }}>
+            <span>Payment flows.</span>
+          </span>
+          <span className="rise" style={{ ["--i" as string]: 3 }}>
+            <span>
+              <HeroTyper phrases={["AI tools.", "Claude agents.", "MCP servers."]} />
+            </span>
+          </span>
+        </h1>
+
+        <p
+          className="fade-up mt-8 max-w-[34rem] text-lg leading-relaxed md:text-xl"
+          style={{ ["--i" as string]: 5 }}
+        >
+          Five years shipping React and Java/Spring features that connect SaaS
+          products to Salesforce, QuickBooks, HubSpot, and payment processors.
+        </p>
+
+        <div className="fade-up mt-9" style={{ ["--i" as string]: 6 }}>
+          <a href={`mailto:${EMAIL}`} className="btn btn-accent">
+            Email me
+            <ArrowRight size={18} weight="bold" className="btn-arrow" />
+          </a>
+        </div>
       </div>
-      <h1 className="mb-6 text-4xl font-medium tracking-tight sm:text-5xl">
-        Anisur Khan
-      </h1>
-      <p className="text-lg leading-relaxed text-[color:var(--color-fg-muted)] sm:text-xl">
-        Full-stack engineer in Sacramento, CA.{" "}
-        <span className="text-[color:var(--color-fg)]">
-          I build{" "}
-          <Typewriter
-            phrases={[
-              "SaaS integrations.",
-              "Salesforce and QuickBooks pipelines.",
-              "production React + Java services.",
-              "Claude-based AI tooling.",
-            ]}
-            className="text-[color:var(--color-accent)]"
-          />
-        </span>{" "}
-        Five years shipping work across React, Java, and MongoDB platforms.
-      </p>
-      <div className="mt-6 flex items-center gap-2 text-xs text-[color:var(--color-fg-subtle)]">
-        <span>Press</span>
-        <kbd className="rounded border border-[color:var(--color-border-soft)] px-1.5 py-0.5">⌘K</kbd>
-        <span>for commands, or open the chat to ask my AI anything.</span>
+
+      {/* Portrait: bleeds off the right and bottom edges, facing the copy. */}
+      <div
+        aria-hidden={false}
+        className="hero-drift pointer-events-none relative -mt-4 ml-auto mr-5 h-[52vh] w-[min(78vw,26rem)] self-end sm:h-[58vh] lg:absolute lg:bottom-0 lg:right-[max(2.5rem,calc((100vw-1400px)/2+2.5rem))] lg:mt-0 lg:h-[88%] lg:w-auto lg:aspect-[846/1600]"
+      >
+        <Portrait />
       </div>
-    </ScrollReveal>
+    </section>
   );
 }
+
+/* ------------------------------------------------------------------ */
+
+const FACTS = [
+  { k: "Based in", v: "Sacramento, CA" },
+  { k: "Experience", v: "5+ years. Software Engineer II at CRETelligent (Dec 2020 to Jun 2026), plus contract work as a Senior Integrations Developer in 2026" },
+  { k: "Education", v: "App Academy (1500+ hour immersive). UC Davis, B.S. Biology" },
+  { k: "Looking for", v: "Senior full-stack and integrations roles, including contract" },
+];
 
 function About() {
   return (
-    <ScrollReveal as="section" className="mb-20">
-      <h2 className="mb-6 text-xs font-medium uppercase tracking-widest text-[color:var(--color-fg-subtle)]">
-        About
-      </h2>
-      <div className="space-y-5 text-base leading-relaxed text-[color:var(--color-fg-muted)]">
-        <p>
-          Most recently at <span className="text-[color:var(--color-fg)]">CRETelligent</span>,
-          a commercial real estate due diligence SaaS, where I spent 5+ years
-          building the Radius platform. I shipped 100+ pull requests in the
-          last 18 months across five services, owning end-to-end work from
-          React frontends through Java/Spring backends.
-        </p>
-        <p>
-          My specialty is the integration layer between SaaS products.
-          I&apos;ve built and maintained connections to{" "}
-          <span className="text-[color:var(--color-fg)]">
-            Salesforce, QuickBooks, HubSpot, USAePay, Quire, Regrid, Pendo, and
-            Mailgun
-          </span>
-          . Most recent work was a self-service subscription rebuild covering
-          multi-step email verification, payment processing, and downstream
-          accounting sync.
-        </p>
-        <p>
-          Lately I&apos;ve been building AI tooling for my own workflow.
-          I run a Claude-based automation system locally (Claude Code with
-          custom hooks, skills, and MCP servers) and I&apos;m shipping a
-          multi-agent meeting transcript analyzer as my next public project.
-        </p>
-      </div>
-    </ScrollReveal>
-  );
-}
+    <section id="about" data-field="olive" className="py-28 md:py-40">
+      <div className={`${shell} grid gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20`}>
+        <ScrollReveal className="self-start lg:sticky lg:top-28">
+          <figure className="wipe overflow-hidden rounded-2xl">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/profile.jpg"
+              alt="Anisur Khan standing on a city street, in profile"
+              width={1080}
+              height={1350}
+              loading="lazy"
+              className="h-auto w-full"
+            />
+          </figure>
+        </ScrollReveal>
 
-function Specialties() {
-  const items = [
-    {
-      title: "SaaS integrations",
-      body: "Designing and shipping the layer that connects products to Salesforce, QuickBooks, HubSpot, payment processors, and third-party reporting APIs.",
-    },
-    {
-      title: "Full-stack feature delivery",
-      body: "End-to-end ownership across React/TypeScript frontends and Java/Spring backends. Comfortable across the stack from UI states to async order flows.",
-    },
-    {
-      title: "AI tooling and orchestration",
-      body: "Building practical Claude-based automations: multi-agent pipelines, structured output validation, retry logic, and MCP-style tool integration.",
-    },
-    {
-      title: "Code review and mentorship",
-      body: "Frequent reviewer across 5 service repos. Comfortable raising real concerns in PRs while keeping merge velocity high.",
-    },
-  ];
-
-  return (
-    <ScrollReveal as="section" className="mb-20">
-      <h2 className="mb-6 text-xs font-medium uppercase tracking-widest text-[color:var(--color-fg-subtle)]">
-        What I do
-      </h2>
-      <div className="grid gap-6 sm:grid-cols-2">
-        {items.map((item) => (
-          <GlowCard
-            key={item.title}
-            className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-bg-elevated)] p-5"
-          >
-            <h3 className="mb-2 text-base font-medium text-[color:var(--color-fg)]">
-              {item.title}
-            </h3>
-            <p className="text-sm leading-relaxed text-[color:var(--color-fg-muted)]">
-              {item.body}
+        <div className="lg:pt-4">
+          <ScrollReveal>
+            <p className="max-w-[30ch] text-[clamp(1.75rem,3vw,2.6rem)] font-medium leading-[1.15] tracking-[-0.02em]">
+              I work on the layer most people never see: the part where your
+              product talks to Salesforce, QuickBooks, and a payment processor,
+              and the numbers still match at the end of the month.
             </p>
-          </GlowCard>
-        ))}
+          </ScrollReveal>
+          <ScrollReveal delay={120}>
+            <p className="muted mt-10 max-w-[60ch] text-lg leading-relaxed">
+              For five and a half years I built the Radius platform at
+              CRETelligent, a commercial real estate due diligence SaaS. In my
+              last 18 months there I shipped 100+ pull requests across five
+              services, from React frontends to Java/Spring backends. In 2026 I
+              also took over a portfolio of production HubSpot integrations
+              on contract, as a Senior Integrations Developer. Lately I build Claude-based
+              tools that check their own output before a person ever reads it.
+            </p>
+          </ScrollReveal>
+          <dl className="mt-14 grid gap-x-10 gap-y-8 sm:grid-cols-2">
+            {FACTS.map((f, i) => (
+              <ScrollReveal key={f.k} delay={i * 60}>
+                <dt className="muted text-sm font-medium">{f.k}</dt>
+                <dd className="mt-1.5 text-lg leading-snug">{f.v}</dd>
+              </ScrollReveal>
+            ))}
+          </dl>
+        </div>
+
       </div>
-    </ScrollReveal>
+    </section>
   );
 }
+
+/* ------------------------------------------------------------------ */
+
+const SKILLS: Skill[] = [
+  {
+    name: "SaaS integrations",
+    where: "CRETelligent, Radius platform",
+    proof:
+      "Built the layer between Radius and Salesforce: auto-push for proposals, vendor lifecycle sync with the Connect platform, Quire document routing, and sync that survives bulk loads.",
+  },
+  {
+    name: "HubSpot integrations",
+    where: "Senior Integrations Developer, contract, 2026",
+    proof:
+      "Took over production syncs into HubSpot from SchoolMint, Infinite Campus, NetSuite, and SFTP feeds: designed observability across services, put every bulk data change behind a dry run or a rollback log, and removed the failure behind about 6,900 rejected upserts per run.",
+  },
+  {
+    name: "Payments and billing",
+    where: "CRETelligent, Q1 to Q2 2026",
+    proof:
+      "Rebuilt self-service subscriptions end to end: USAePay integration with credit-card surcharge logic, a Starter monthly tier, legal-terms gating, and asynchronous payment orchestration.",
+  },
+  {
+    name: "Data sync and reconciliation",
+    where: "CRETelligent, QuickBooks pipeline",
+    proof:
+      "Mapped subscription titles to QuickBooks products, synced invoices from the asynchronous order flow, and reconciled USAePay payments against the books.",
+  },
+  {
+    name: "Full-stack features",
+    where: "CRETelligent, Software Engineer I",
+    proof:
+      "Built Teams Management end to end: a React UI with a RadiusMap component in order-tracker, plus a Java TeamDao with full CRUD and admin-role permissions.",
+  },
+  {
+    name: "Shipping under pressure",
+    where: "CRETelligent, June 2026",
+    proof:
+      "When Google Maps deprecated its Drawing Library, I led the parcel draw tool rebuild: pinned the Maps JS API, added backend alerting, and shipped across three services in four days.",
+  },
+  {
+    name: "Performance tuning",
+    where: "CRETelligent, connect-service",
+    proof:
+      "Moved S3 file handling to the CRT-based S3AsyncClient, added the aws-crt dependency, and refactored the AwsStorage class around it.",
+  },
+  {
+    name: "LLM orchestration",
+    where: "transcript-insights, open source",
+    proof:
+      "Three Claude agents run in parallel, each validated against a Zod schema with targeted retries, then checked against the transcript so no quote or deadline is invented.",
+  },
+  {
+    name: "Code review",
+    where: "Five service repos",
+    proof:
+      "A frequent reviewer across five services and the person teammates asked about frontend work and the parts of the codebase I knew best.",
+  },
+];
+
+function SkillsSection() {
+  return (
+    <section id="skills" data-field="ink" className="py-28 md:py-40">
+      <div className={shell}>
+        <ScrollReveal>
+          <SectionTitle>Skills, with receipts.</SectionTitle>
+        </ScrollReveal>
+        <ScrollReveal delay={100}>
+          <Skills items={SKILLS} />
+        </ScrollReveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
+const STACK = [
+  { label: "Languages", items: ["TypeScript", "JavaScript", "Java", "SQL", "HTML", "CSS"], span: "lg:col-span-4" },
+  { label: "Frontend", items: ["React", "Next.js", "Redux", "Angular", "Tailwind CSS", "Material UI"], span: "lg:col-span-4" },
+  { label: "Backend", items: ["Node.js", "Express", "Java (Spring, WebClient)", "REST", "GraphQL"], span: "lg:col-span-4" },
+  { label: "Data and infra", items: ["MongoDB", "PostgreSQL", "AWS S3 (CRT)", "Docker", "Git", "GitHub Actions"], span: "lg:col-span-5" },
+  { label: "AI and tooling", items: ["Claude API", "Claude Code", "MCP servers", "GitHub Copilot", "Aikido (SAST)", "Playwright"], span: "lg:col-span-7" },
+];
+
+const INTEGRATIONS = ["HubSpot", "Salesforce", "QuickBooks", "NetSuite", "USAePay", "SchoolMint", "Infinite Campus", "Quire", "Regrid", "Pendo", "Mailgun", "Google Maps"];
+
+function Stack() {
+  return (
+    <section id="stack" data-field="graphite" className="py-28 md:py-40">
+      <div className={shell}>
+        <ScrollReveal>
+          <SectionTitle>The stack I reach for.</SectionTitle>
+        </ScrollReveal>
+
+        <div className="grid gap-4 lg:grid-cols-12">
+          {/* Integrations: the feature cell */}
+          <ScrollReveal className="lg:col-span-12">
+            <div className="rounded-2xl bg-[var(--color-coral)] p-7 text-[var(--color-ink)] md:p-10">
+              <h3 className="text-sm font-semibold">Integrations shipped to production</h3>
+              <ul className="mt-5 flex flex-wrap gap-x-7 gap-y-2">
+                {INTEGRATIONS.map((name) => (
+                  <li key={name} className="display text-[clamp(1.75rem,3.6vw,3rem)] leading-[1.05]">
+                    {name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </ScrollReveal>
+
+          {STACK.map((g, i) => (
+            <ScrollReveal key={g.label} delay={i * 60} className={g.span}>
+              <div className="h-full rounded-2xl bg-[color-mix(in_oklab,var(--color-paper)_6%,transparent)] p-7 md:p-8">
+                <h3 className="muted text-sm font-semibold">{g.label}</h3>
+                <ul className="mt-5 flex flex-wrap gap-2">
+                  {g.items.map((item) => (
+                    <li
+                      key={item}
+                      className="rounded-full border border-[color-mix(in_oklab,currentColor_22%,transparent)] px-3.5 py-1.5 text-[15px] font-medium"
+                    >
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
+const SPECIALTIES: Specialty[] = [
+  {
+    title: "Connect products to the systems they run on",
+    body: "CRMs, ERPs, school enrollment systems, document tools, parcel data, and email, synced on schedules and resilient to bulk loads.",
+    nodes: ["salesforce", "hubspot", "schoolmint", "infinitecampus", "netsuite", "quire", "regrid", "pendo", "mailgun"],
+  },
+  {
+    title: "Move money correctly",
+    body: "Card payments, surcharges, subscription tiers, and invoices that reconcile with accounting.",
+    nodes: ["usaepay", "quickbooks"],
+  },
+  {
+    title: "Own features end to end",
+    body: "From React and TypeScript screens to Java/Spring services, async flows, and the database underneath.",
+    nodes: "all",
+  },
+  {
+    title: "Build AI tools that check their own work",
+    body: "Claude agents with schema validation, retries, and grounding checks, wired together with hooks, skills, and MCP servers.",
+    nodes: ["claude"],
+  },
+];
+
+function WhatIDo() {
+  return (
+    <section id="what-i-do" data-field="umber" className="py-28 md:py-40">
+      <div className={shell}>
+        <ScrollReveal>
+          <SectionTitle>What I do.</SectionTitle>
+        </ScrollReveal>
+        <IntegrationMap specialties={SPECIALTIES} />
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 
 type Project = {
   title: string;
+  context: string;
   summary: string;
+  points: string[];
   tags: string[];
-  href?: string;
-  github?: string;
-  status?: string;
+  links?: { label: string; href: string }[];
+  note?: string;
+  tint: string;
 };
 
+const PROJECTS: Project[] = [
+  {
+    title: "Self-service subscriptions and payments",
+    context: "CRETelligent, Radius platform, 2026",
+    summary:
+      "Rebuilt how customers sign up and pay, across a React frontend and a Java/Spring backend.",
+    points: [
+      "Multi-step email verification before account creation",
+      "USAePay integration with credit-card surcharge logic and legal-terms gating",
+      "Starter monthly billing tier and asynchronous payment orchestration",
+      "Invoice sync into QuickBooks from the async order flow",
+    ],
+    tags: ["React", "Java", "Spring", "USAePay", "QuickBooks"],
+    note: "Private codebase",
+    tint: "#2a2724",
+  },
+  {
+    title: "CRM and accounting integration layer",
+    context: "CRETelligent, Radius platform, 2020 to 2026",
+    summary:
+      "The connective tissue between Radius and the business systems around it.",
+    points: [
+      "Salesforce auto-push for proposals and vendor lifecycle sync with the Connect platform",
+      "Salesforce to Quire document routing and sync that survives bulk loads",
+      "QuickBooks product mapping and payment reconciliation against USAePay",
+      "Integrations with HubSpot, Regrid, Pendo, and Mailgun",
+    ],
+    tags: ["Java", "Spring", "Salesforce", "HubSpot", "QuickBooks", "Quire"],
+    note: "Private codebase",
+    tint: "#30352a",
+  },
+  {
+    title: "Taking over a HubSpot integration portfolio",
+    context: "Senior Integrations Developer, contract, 2026",
+    summary:
+      "Stepped in as successor to the outgoing lead developer on production Node.js syncs that feed HubSpot from school enrollment systems, NetSuite, and SFTP sales feeds.",
+    points: [
+      "Mapped ownership and continuity risk across ten production integrations, flagging single points of support",
+      "Designed cross-service sync observability: a shared status writer, an authenticated status endpoint, and a HubSpot app banner",
+      "Gated bulk data changes behind dry runs and rollback logs, including a 3,213-contact cleanup and a 43,700-deal backfill",
+      "Caught a copied stage mapping that would have recorded every declined applicant as a won deal",
+      "Removed a failure class: E.164 phone normalization cleared about 6,900 rejected upserts per run",
+      "Cut alert noise: the hourly ops digest now fires only on real failures",
+    ],
+    tags: ["Node.js", "HubSpot API", "HubSpot UI extensions", "SchoolMint", "Infinite Campus", "NetSuite", "SFTP", "systemd"],
+    note: "Client codebases, private",
+    tint: "#2b2f35",
+  },
+  {
+    title: "transcript-insights",
+    context: "Open source, TypeScript",
+    summary:
+      "A meeting transcript analyzer where three Claude agents read the same transcript in parallel, in about ten seconds.",
+    points: [
+      "Agents for decisions and action items, business context, and interpersonal dynamics",
+      "Zod schema validation, with the exact error fed back to the model on retry",
+      "Grounding check: invented quotes, people, or deadlines get sent back for correction",
+      "71 tests, an architecture doc, and committed sample output",
+    ],
+    tags: ["TypeScript", "Claude API", "Zod", "Multi-agent"],
+    links: [{ label: "Source", href: "https://github.com/AnisurK24/transcript-insights" }],
+    tint: "#1f2b28",
+  },
+  {
+    title: "Claude Code automation system",
+    context: "Personal tooling, daily use",
+    summary:
+      "The local system I run my own work through, built on Claude Code.",
+    points: [
+      "Custom hooks that log sessions and keep a daily record of work",
+      "Skills for recurring workflows like meeting notes and PR descriptions",
+      "MCP servers that connect the agent to mail, documents, and a browser",
+    ],
+    tags: ["Claude Code", "Hooks", "Skills", "MCP"],
+    tint: "#2f2a33",
+  },
+  {
+    title: "This site",
+    context: "Next.js 15 on Netlify",
+    summary:
+      "A portfolio with a chat that answers questions about me, grounded in my resume and streamed from Claude.",
+    points: [
+      "Server route streams Claude responses; the API key never reaches the browser",
+      "Rate limiting that holds across serverless instances, backed by Netlify Blobs",
+      "Grounding rules that keep the model from inventing roles, dates, or contact details",
+    ],
+    tags: ["Next.js", "TypeScript", "Claude API", "Netlify"],
+    links: [{ label: "Source", href: "https://github.com/AnisurK24/portfolio_website" }],
+    tint: "#1d1f1c",
+  },
+];
+
 function Work() {
-  const projects: Project[] = [
-    {
-      title: "transcript-insights",
-      summary:
-        "Multi-agent meeting transcript analyzer. Three specialized Claude agents run in parallel on a transcript and produce structured outputs: decisions and action items, business context, and interpersonal dynamics. Schema-validated, with retry on validation failures.",
-      tags: ["TypeScript", "Claude API", "Multi-agent", "Zod"],
-      github: "https://github.com/AnisurK24/transcript-insights",
-      status: "In progress",
-    },
-    {
-      title: "CRETelligent Radius integrations",
-      summary:
-        "Production work for a CRE due diligence SaaS. Built the self-service subscription rebuild, Salesforce auto-push for proposals and vendor lifecycle sync, QuickBooks invoice and product reconciliation, and led the response when Google Maps deprecated the Drawing Library mid-quarter.",
-      tags: ["React", "Java", "Spring", "MongoDB", "Salesforce", "USAePay"],
-      status: "Private repos",
-    },
-    {
-      title: "GridAlgoPathfinder",
-      summary:
-        "Interactive visualizer for BFS and DFS pathfinding. Lets you place start and end points, draw obstacles, adjust grid size, and watch the algorithms search.",
-      tags: ["JavaScript", "DOM", "Algorithms"],
-      href: "https://anisurk24.github.io/GridAlgoPathfinder/",
-      github: "https://github.com/AnisurK24/GridAlgoPathfinder",
-    },
-  ];
-
   return (
-    <ScrollReveal as="section" className="mb-20">
-      <div id="work" />
-      <h2 className="mb-6 text-xs font-medium uppercase tracking-widest text-[color:var(--color-fg-subtle)]">
-        Selected work
-      </h2>
-      <div className="space-y-4">
-        {projects.map((project) => (
-          <GlowCard
-            key={project.title}
-            as="article"
-            className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-bg-elevated)] p-6 transition-colors hover:border-[color:var(--color-fg-subtle)]"
-          >
-            <div className="mb-3 flex items-baseline justify-between gap-4">
-              <h3 className="text-lg font-medium text-[color:var(--color-fg)]">
-                {project.title}
-              </h3>
-              {project.status && (
-                <span className="text-xs text-[color:var(--color-fg-subtle)]">
-                  {project.status}
-                </span>
-              )}
-            </div>
-            <p className="mb-4 text-sm leading-relaxed text-[color:var(--color-fg-muted)]">
-              {project.summary}
-            </p>
-            <div className="mb-4 flex flex-wrap gap-2">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-[color:var(--color-border-soft)] px-2.5 py-0.5 text-xs text-[color:var(--color-fg-subtle)]"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <div className="flex gap-4 text-sm">
-              {project.href && (
-                <a
-                  href={project.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[color:var(--color-accent)] hover:underline"
-                >
-                  Live →
-                </a>
-              )}
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[color:var(--color-accent)] hover:underline"
-                >
-                  Source →
-                </a>
-              )}
-            </div>
-          </GlowCard>
-        ))}
+    <section id="work" data-field="ink" className="py-28 md:py-40">
+      <div className={shell}>
+        <ScrollReveal>
+          <SectionTitle>Selected work.</SectionTitle>
+        </ScrollReveal>
+
+        <ol className="grid gap-6">
+          {PROJECTS.map((p, i) => (
+            <li
+              key={p.title}
+              className="stack-card"
+              style={{ ["--i" as string]: i }}
+            >
+              <article
+                className="grid gap-8 rounded-2xl p-7 shadow-[0_-12px_40px_-12px_rgba(0,0,0,0.5)] md:p-10 2xl:p-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14"
+                style={{ background: p.tint }}
+              >
+                <div className="flex flex-col">
+                  <p className="muted text-sm font-medium">{p.context}</p>
+                  <h3 className="display mt-3 text-[clamp(2rem,4.2vw,3.5rem)] leading-[0.98]">
+                    {p.title}
+                  </h3>
+                  <p className="muted mt-5 max-w-[44ch] text-lg leading-relaxed">{p.summary}</p>
+                  <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-3 pt-8">
+                    {p.links?.map((l) => (
+                      <a
+                        key={l.href}
+                        href={l.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-semibold text-[var(--color-coral)] underline-offset-4 hover:underline"
+                      >
+                        {l.label}
+                        <ArrowUpRight size={16} weight="bold" />
+                      </a>
+                    ))}
+                    {p.note && <span className="muted text-sm">{p.note}</span>}
+                  </div>
+                </div>
+                <div>
+                  <ul className="grid gap-3">
+                    {p.points.map((pt) => (
+                      <li key={pt} className="flex gap-3 text-[16px] leading-relaxed xl:text-[17px]">
+                        <span aria-hidden className="mt-[0.68em] h-[2px] w-4 shrink-0 rounded-full bg-[var(--color-coral)]" />
+                        {pt}
+                      </li>
+                    ))}
+                  </ul>
+                  <ul className="mt-7 flex flex-wrap gap-2">
+                    {p.tags.map((t) => (
+                      <li
+                        key={t}
+                        className="rounded-full border border-[color-mix(in_oklab,currentColor_22%,transparent)] px-3 py-1 text-sm font-medium"
+                      >
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            </li>
+          ))}
+        </ol>
       </div>
-    </ScrollReveal>
+    </section>
   );
 }
 
-function Stack() {
-  const groups = [
-    {
-      label: "Languages",
-      items: ["TypeScript", "JavaScript", "Java", "SQL", "HTML", "CSS"],
-    },
-    {
-      label: "Frontend",
-      items: ["React", "Next.js", "Redux", "Angular", "Tailwind CSS", "Material UI"],
-    },
-    {
-      label: "Backend",
-      items: ["Node.js", "Express", "Java (Spring + WebClient)", "REST", "GraphQL"],
-    },
-    {
-      label: "Data and infra",
-      items: ["MongoDB", "PostgreSQL", "AWS (S3 CRT)", "Docker", "Git", "GitHub Actions"],
-    },
-    {
-      label: "Integrations shipped",
-      items: [
-        "Salesforce",
-        "QuickBooks",
-        "HubSpot",
-        "USAePay",
-        "Quire",
-        "Regrid",
-        "Pendo",
-        "Mailgun",
-      ],
-    },
-    {
-      label: "AI and tooling",
-      items: [
-        "Anthropic Claude API",
-        "Claude Code",
-        "MCP servers",
-        "GitHub Copilot",
-        "Aikido (SAST)",
-        "Playwright",
-      ],
-    },
-  ];
-
-  return (
-    <ScrollReveal as="section" className="mb-20">
-      <div id="stack" />
-      <h2 className="mb-6 text-xs font-medium uppercase tracking-widest text-[color:var(--color-fg-subtle)]">
-        Stack
-      </h2>
-      <div className="space-y-5">
-        {groups.map((group) => (
-          <div key={group.label} className="flex flex-col gap-2 sm:flex-row sm:gap-6">
-            <div className="w-44 shrink-0 text-sm text-[color:var(--color-fg-muted)]">
-              {group.label}
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-md border border-[color:var(--color-border-soft)] bg-[color:var(--color-bg-elevated)] px-2.5 py-1 text-xs text-[color:var(--color-fg)]"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </ScrollReveal>
-  );
-}
+/* ------------------------------------------------------------------ */
 
 function Contact() {
   return (
-    <ScrollReveal as="section" className="mb-20">
-      <div id="contact" />
-      <h2 className="mb-6 text-xs font-medium uppercase tracking-widest text-[color:var(--color-fg-subtle)]">
-        Contact
-      </h2>
-      <p className="mb-6 text-base leading-relaxed text-[color:var(--color-fg-muted)]">
-        Best way to reach me is email. Open to senior full-stack and integrations
-        roles, including contract.
-      </p>
-      <ul className="space-y-2 text-sm">
-        <li>
+    <section id="contact" data-field="coral" className="pb-10 pt-28 md:pt-40">
+      <div className={shell}>
+        <ScrollReveal>
+          <h2 className="display max-w-[12ch] text-balance text-[clamp(3.25rem,9vw,8.5rem)]">
+            Have a role in mind?
+          </h2>
+        </ScrollReveal>
+        <ScrollReveal delay={100}>
+          <p className="mt-8 max-w-[40ch] text-xl leading-relaxed">
+            I&apos;m open to senior full-stack and integrations roles, including
+            contract. Email is the fastest way to reach me.
+          </p>
+        </ScrollReveal>
+        <ScrollReveal delay={160}>
           <a
-            href="mailto:anisurk24@gmail.com"
-            className="group inline-flex items-center gap-3 text-[color:var(--color-fg)] hover:text-[color:var(--color-accent)] transition-colors"
+            href={`mailto:${EMAIL}`}
+            className="display mt-12 inline-block break-all text-[clamp(1.9rem,5.6vw,5rem)] underline decoration-2 underline-offset-[0.14em] transition-[text-decoration-color] hover:decoration-transparent"
           >
-            <span className="w-20 text-[color:var(--color-fg-subtle)]">Email</span>
-            anisurk24@gmail.com
+            {EMAIL}
           </a>
-        </li>
-        <li>
-          <a
-            href="https://github.com/AnisurK24"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 text-[color:var(--color-fg)] hover:text-[color:var(--color-accent)] transition-colors"
-          >
-            <span className="w-20 text-[color:var(--color-fg-subtle)]">GitHub</span>
-            github.com/AnisurK24
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://www.linkedin.com/in/anisur-khan-88a00182/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 text-[color:var(--color-fg)] hover:text-[color:var(--color-accent)] transition-colors"
-          >
-            <span className="w-20 text-[color:var(--color-fg-subtle)]">LinkedIn</span>
-            anisur-khan
-          </a>
-        </li>
-        <li>
-          <a
-            href="/Anisur_Khan_Resume.pdf"
-            className="group inline-flex items-center gap-3 text-[color:var(--color-fg)] hover:text-[color:var(--color-accent)] transition-colors"
-          >
-            <span className="w-20 text-[color:var(--color-fg-subtle)]">Resume</span>
-            Download PDF
-          </a>
-        </li>
-      </ul>
-    </ScrollReveal>
-  );
-}
+        </ScrollReveal>
+        <ScrollReveal delay={220}>
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <CopyEmail email={EMAIL} />
+            <a href="https://github.com/AnisurK24" target="_blank" rel="noopener noreferrer" className="btn border border-current">
+              <GithubLogo size={20} /> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/anisur-khan-88a00182/" target="_blank" rel="noopener noreferrer" className="btn border border-current">
+              <LinkedinLogo size={20} /> LinkedIn
+            </a>
+            <a href="/Anisur_Khan_Resume.pdf" className="btn border border-current">
+              <FilePdf size={20} /> Resume
+            </a>
+          </div>
+        </ScrollReveal>
 
-function Footer() {
-  return (
-    <footer className="mt-32 border-t border-[color:var(--color-border-soft)] pt-6 text-xs text-[color:var(--color-fg-subtle)]">
-      <p>
-        Built with Next.js, Tailwind, and the Claude API. View the{" "}
-        <a
-          href="https://github.com/AnisurK24/portfolio_website"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-[color:var(--color-accent)] transition-colors"
-        >
-          source
-        </a>
-        .
-      </p>
-    </footer>
+        <footer className="mt-28 flex flex-col gap-2 border-t border-[color-mix(in_oklab,currentColor_25%,transparent)] pt-6 text-sm font-medium sm:flex-row sm:justify-between md:mt-40">
+          <p>© 2026 Anisur Khan</p>
+          <p>
+            Built with Next.js and the Claude API.{" "}
+            <a
+              href="https://github.com/AnisurK24/portfolio_website"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline underline-offset-4"
+            >
+              View source
+            </a>
+          </p>
+        </footer>
+      </div>
+    </section>
   );
 }

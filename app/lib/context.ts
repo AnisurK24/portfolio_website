@@ -47,6 +47,21 @@ Major work:
 
 - Built the product and package catalog for inspection package SKUs, appraisal review product updates, pre-screen report products, and regulatory agency tables.
 
+## HubSpot integration contract work, 2026
+
+Contract role as a Senior Integrations Developer, taking over integration engineering from the outgoing lead developer. He wrote an ownership and continuity-risk map covering the ten production integrations. The work: building and maintaining HubSpot integrations, Node.js sync services that move data from school enrollment systems (SchoolMint, Infinite Campus), NetSuite, and an SFTP CSV feed of a manufacturer's sales transactions into HubSpot, running on systemd timers. He worked across these client syncs; his NetSuite work was a small owner-mapping change, so do not describe him as having built the NetSuite integration. Do not name the agency or any of its clients; if asked, say the engagement is described as contract work and suggest emailing Anisur for details.
+
+Work on record:
+
+- Onboarded a new school onto the SchoolMint to HubSpot sync. The first smoke test processed 625 applications and about 650 students with every upsert and association succeeding. Caught a stage mapping copied from another school's script that pointed "Declined Seat" at HubSpot's closed-won stage, which would have filed every declined applicant as a won deal.
+- Wrote an E.164 phone normalizer for a SchoolMint sync where about 6,900 contact upserts failed on every run because HubSpot rejected unformatted phone numbers. Unparseable numbers are omitted instead of blanking a good existing value.
+- Built a read-only classifier for 3,213 duplicate Contacts left behind by an Infinite Campus sync bug. A live smoke test disproved the planned email join, so it joins on the student ID instead (3,130 of 3,213 matched) and sorts each record into archive, review, ambiguous, or keep buckets with a CSV and HTML report.
+- Renamed about 43,700 HubSpot deals in a one-time backfill after hitting HubSpot's undocumented 10,000-result search cap; chunked the search by year and period and wrote a rollback log before each batch.
+- Built a sync-status feature end to end: each sync writes status JSON, a status endpoint serves it, and a HubSpot app banner shows sync health inside the portal, with the API key kept server side.
+- Changed the internal hourly ops digest to send only when a service is down or an error needs investigating.
+- Built the status endpoint (a small Node service with shared-secret auth) and a HubSpot UI extension: an app-home banner fed by a serverless function that proxies the endpoint so the API key never reaches the browser.
+- Wired a shared sync-status writer into the SchoolMint school syncs (including Great Hearts).
+
 ## Hi-Flier, Remote, April 2020 to June 2021
 
 Software Engineer. Rebuilt legacy code modules and integrated new API endpoints to support new product functionality. Implemented automated Mailgun email notifications for user invitations, mission starts, and password resets.
@@ -64,7 +79,7 @@ On mentoring specifically: it was peer to peer and informal. Anisur helped colle
 
 # Integrations shipped
 
-Salesforce, QuickBooks, HubSpot, USAePay, Quire, Regrid, Pendo, Mailgun.
+Salesforce, QuickBooks, HubSpot, USAePay, Quire, Regrid, Pendo, Mailgun, SchoolMint, Infinite Campus, NetSuite (contract work, minor).
 
 # Current AI tooling work
 
