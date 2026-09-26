@@ -82,11 +82,44 @@ export type Repo = {
 
 export type LanguageShare = { name: string; bytes: number; share: number };
 
+export type FrameworkCount = { name: string; repos: number };
+
 export type RepoSummary = {
   publicRepos: number;
   repos: Repo[];
   languages: LanguageShare[];
+  frameworks: FrameworkCount[];
 };
+
+// GitHub reports languages, not runtimes or libraries, so Node.js and React
+// never show up in language data. Detect them from each repo's package.json
+// instead. A package.json alone isn't enough for Node.js (browser apps use npm
+// just to build), so Node needs a declared engine or a server-side dependency.
+const NODE_DEPS = ["express", "@types/node", "next", "nodemon", "tsx", "ts-node", "fastify", "koa"];
+type Pkg = { dependencies?: Record<string, string>; devDependencies?: Record<string, string>; engines?: { node?: string } };
+const FRAMEWORKS: [string, (deps: Record<string, string>, pkg: Pkg) => boolean][] = [
+  ["Node.js", (d, pkg) => Boolean(pkg.engines?.node) || NODE_DEPS.some((n) => n in d)],
+  ["React", (d) => "react" in d],
+  ["Express", (d) => "express" in d],
+  ["Next.js", (d) => "next" in d],
+  ["Redux", (d) => "redux" in d || "@reduxjs/toolkit" in d],
+  ["Claude API", (d) => "@anthropic-ai/sdk" in d],
+];
+
+async function detectFrameworks(repo: string): Promise<string[]> {
+  try {
+    const res = await fetch(`https://raw.githubusercontent.com/${GITHUB_USER}/${repo}/HEAD/package.json`, {
+      headers: { "User-Agent": "anisurkhan.com" },
+      next: { revalidate: REVALIDATE },
+    });
+    if (!res.ok) return [];
+    const pkg = (await res.json()) as Pkg;
+    const deps = { ...pkg.dependencies, ...pkg.devDependencies };
+    return FRAMEWORKS.filter(([, test]) => test(deps, pkg)).map(([name]) => name);
+  } catch {
+    return [];
+  }
+}
 
 type ApiRepo = {
   name: string;
@@ -120,6 +153,11 @@ export async function getRepoSummary(): Promise<RepoSummary | null> {
       }),
     );
 
+    const perRepo = await Promise.all(own.map((r) => detectFrameworks(r.name)));
+    const frameworkCounts = new Map<string, number>();
+    for (const list of perRepo) for (const f of list) frameworkCounts.set(f, (frameworkCounts.get(f) ?? 0) + 1);
+    const frameworks = FRAMEWORKS.map(([name]) => ({ name, repos: frameworkCounts.get(name) ?? 0 })).filter((f) => f.repos > 0);
+
     const sum = [...totals.values()].reduce((a, b) => a + b, 0);
     const sorted = [...totals.entries()].sort((a, b) => b[1] - a[1]);
     // Top five, the rest folded into "Other" so the chart stays readable.
@@ -138,6 +176,7 @@ export async function getRepoSummary(): Promise<RepoSummary | null> {
         url: r.html_url,
       })),
       languages: sum > 0 ? top : [],
+      frameworks,
     };
   } catch {
     return null;

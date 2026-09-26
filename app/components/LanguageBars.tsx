@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import type { LanguageShare } from "@/app/lib/github";
+import type { FrameworkCount, LanguageShare } from "@/app/lib/github";
 
 // One series (share of code), so every bar takes the same hue and the
 // labels carry identity. Hovering a row shows the raw size.
-export function LanguageBars({ languages }: { languages: LanguageShare[] }) {
+export function LanguageBars({ languages, frameworks = [] }: { languages: LanguageShare[]; frameworks?: FrameworkCount[] }) {
   const [active, setActive] = useState<string | null>(null);
   const max = Math.max(...languages.map((l) => l.share));
 
@@ -43,8 +43,26 @@ export function LanguageBars({ languages }: { languages: LanguageShare[] }) {
           );
         })}
       </ul>
+      {frameworks.length > 0 && (
+        <div className="mt-7">
+          <h4 className="text-sm font-semibold">Frameworks &amp; runtimes</h4>
+          <ul className="mt-3 flex flex-wrap gap-2" aria-label="Frameworks and runtimes detected in public repositories">
+            {frameworks.map((f) => (
+              <li
+                key={f.name}
+                className="inline-flex items-center gap-2 rounded-full border border-[color-mix(in_oklab,currentColor_22%,transparent)] px-3.5 py-1.5 text-[15px] font-medium"
+              >
+                {f.name}
+                <span className="muted text-[13px] tabular-nums">
+                  {f.repos} repo{f.repos === 1 ? "" : "s"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       <figcaption className="mt-5 grid gap-2 text-sm leading-relaxed">
-        <span className="muted">By code size. These are mostly App Academy projects.</span>
+        <span className="muted">Languages by code size; Node.js and React code counts as JavaScript. Mostly App Academy projects.</span>
         <span>
           Professionally I shipped <strong className="font-semibold">Java (Spring)</strong> backends and{" "}
           <strong className="font-semibold">React/TypeScript</strong> frontends at CRETelligent, and{" "}

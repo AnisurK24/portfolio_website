@@ -555,7 +555,7 @@ async function GitHub() {
           {summary && summary.languages.length > 0 && (
             <ScrollReveal>
               <h3 className="mb-6 text-lg font-semibold">Languages in public repos</h3>
-              <LanguageBars languages={summary.languages} />
+              <LanguageBars languages={summary.languages} frameworks={summary.frameworks} />
             </ScrollReveal>
           )}
 
