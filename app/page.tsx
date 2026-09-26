@@ -1,4 +1,7 @@
-import { ArrowRight, ArrowUpRight, GithubLogo, LinkedinLogo, FilePdf } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, ArrowUpRight, GithubLogo, LinkedinLogo, FilePdf, Star } from "@phosphor-icons/react/dist/ssr";
+import { ContributionHeatmap } from "@/app/components/ContributionHeatmap";
+import { LanguageBars } from "@/app/components/LanguageBars";
+import { GITHUB_USER, getContributions, getRepoSummary } from "@/app/lib/github";
 import { ChatWidget } from "@/app/components/ChatWidget";
 import { ConsoleEasterEgg } from "@/app/components/ConsoleEasterEgg";
 import { CopyEmail } from "@/app/components/CopyEmail";
@@ -24,6 +27,7 @@ export default function Home() {
         <Stack />
         <WhatIDo />
         <Work />
+        <GitHub />
         <Contact />
       </main>
       <ChatWidget />
@@ -500,6 +504,96 @@ function Work() {
             </li>
           ))}
         </ol>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
+const PINNED = ["transcript-insights", "portfolio_website"];
+
+async function GitHub() {
+  const [contrib, summary] = await Promise.all([getContributions(), getRepoSummary()]);
+  const profile = `https://github.com/${GITHUB_USER}`;
+  const pinned = summary ? PINNED.map((n) => summary.repos.find((r) => r.name === n)).filter((r) => r !== undefined) : [];
+
+  const stats = [
+    contrib && { k: "Contributions, last 12 months", v: contrib.total.toLocaleString("en-US") },
+    contrib && { k: "Active days", v: String(contrib.activeDays) },
+    summary && { k: "Public repositories", v: String(summary.publicRepos) },
+  ].filter((x): x is { k: string; v: string } => Boolean(x));
+
+  return (
+    <section id="github" data-field="olive" className="py-28 md:py-40">
+      <div className={shell}>
+        <ScrollReveal>
+          <SectionTitle>On GitHub.</SectionTitle>
+        </ScrollReveal>
+
+        {stats.length > 0 && (
+          <ScrollReveal>
+            <dl className="mb-12 grid grid-cols-2 gap-x-8 gap-y-6 md:mb-16 md:grid-cols-3">
+              {stats.map((s) => (
+                <div key={s.k}>
+                  <dt className="muted text-sm font-medium">{s.k}</dt>
+                  <dd className="display mt-1 text-[clamp(2rem,3.6vw,3rem)] tabular-nums">{s.v}</dd>
+                </div>
+              ))}
+            </dl>
+          </ScrollReveal>
+        )}
+
+        {contrib && (
+          <ScrollReveal>
+            <h3 className="mb-5 text-lg font-semibold">Contribution activity</h3>
+            <ContributionHeatmap days={contrib.days} />
+          </ScrollReveal>
+        )}
+
+        <div className="mt-16 grid gap-14 md:mt-20 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
+          {summary && summary.languages.length > 0 && (
+            <ScrollReveal>
+              <h3 className="mb-6 text-lg font-semibold">Languages</h3>
+              <LanguageBars languages={summary.languages} />
+            </ScrollReveal>
+          )}
+
+          <ScrollReveal delay={100}>
+            <h3 className="mb-6 text-lg font-semibold">Pinned repositories</h3>
+            <ul className="grid gap-4">
+              {pinned.map((r) => (
+                <li key={r.name}>
+                  <a
+                    href={r.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block rounded-2xl bg-[color-mix(in_oklab,var(--color-paper)_6%,transparent)] p-6 transition-colors hover:bg-[color-mix(in_oklab,var(--color-paper)_10%,transparent)]"
+                  >
+                    <span className="flex items-center justify-between gap-4">
+                      <span className="text-lg font-semibold">{r.name}</span>
+                      <ArrowUpRight size={18} weight="bold" className="shrink-0 text-[var(--color-coral)] transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </span>
+                    {r.description && <span className="muted mt-2 block leading-relaxed">{r.description}</span>}
+                    <span className="muted mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
+                      {r.language && <span>{r.language}</span>}
+                      <span className="inline-flex items-center gap-1"><Star size={14} weight="fill" aria-hidden /> {r.stars}</span>
+                      <span>Updated {new Date(r.pushedAt).toLocaleDateString("en-US", { month: "short", year: "numeric" })}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href={profile}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 inline-flex items-center gap-2 font-semibold underline decoration-[var(--color-coral)] decoration-2 underline-offset-[6px] transition-[text-decoration-color] hover:decoration-current"
+            >
+              <GithubLogo size={20} className="text-[var(--color-coral)]" /> View all on GitHub
+            </a>
+          </ScrollReveal>
+        </div>
       </div>
     </section>
   );
