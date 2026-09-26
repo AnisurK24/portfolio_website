@@ -103,7 +103,7 @@ function Hero() {
 
 const FACTS = [
   { k: "Based in", v: "Sacramento, CA" },
-  { k: "Experience", v: "5+ years. Software Engineer II at CRETelligent (Dec 2020 to Jun 2026), plus contract work as a Senior Integrations Developer in 2026" },
+  { k: "Experience", v: "5+ years. Software Engineer II at CRETelligent (Dec 2020 to Jun 2026), and a Senior Integrations Developer on contract since April 2026" },
   { k: "Education", v: "App Academy (1500+ hour immersive). UC Davis, B.S. Biology" },
   { k: "Looking for", v: "Senior full-stack and integrations roles, including contract" },
 ];
@@ -139,8 +139,8 @@ function About() {
               For five and a half years I built the Radius platform at
               CRETelligent, a commercial real estate due diligence SaaS. In my
               last 18 months there I shipped 100+ pull requests across five
-              services, from React frontends to Java/Spring backends. In 2026 I
-              also took over a portfolio of production HubSpot integrations
+              services, from React frontends to Java/Spring backends. Since April
+              2026 I have run a portfolio of production HubSpot integrations
               on contract, as a Senior Integrations Developer. Lately I build Claude-based
               tools that check their own output before a person ever reads it.
             </p>
@@ -171,7 +171,7 @@ const SKILLS: Skill[] = [
   },
   {
     name: "HubSpot integrations",
-    where: "Senior Integrations Developer, contract, 2026",
+    where: "Senior Integrations Developer, contract, April 2026 to present",
     proof:
       "Took over production syncs into HubSpot from SchoolMint, Infinite Campus, NetSuite, and SFTP feeds: designed observability across services, put every bulk data change behind a dry run or a rollback log, and removed the failure behind about 6,900 rejected upserts per run.",
   },
@@ -376,7 +376,7 @@ const PROJECTS: Project[] = [
   },
   {
     title: "Taking over a HubSpot integration portfolio",
-    context: "Senior Integrations Developer, contract, 2026",
+    context: "Senior Integrations Developer, contract, April 2026 to present",
     summary:
       "Stepped in as successor to the outgoing lead developer on production Node.js syncs that feed HubSpot from school enrollment systems, NetSuite, and SFTP sales feeds.",
     points: [
