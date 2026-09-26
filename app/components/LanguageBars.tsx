@@ -43,8 +43,14 @@ export function LanguageBars({ languages }: { languages: LanguageShare[] }) {
           );
         })}
       </ul>
-      <figcaption className="muted mt-4 text-xs">
-        Public repositories only, by code size. Most of my professional Java and TypeScript lives in private repos.
+      <figcaption className="mt-5 grid gap-2 text-sm leading-relaxed">
+        <span className="muted">By code size. These are mostly App Academy projects.</span>
+        <span>
+          Professionally I shipped <strong className="font-semibold">Java (Spring)</strong> backends and{" "}
+          <strong className="font-semibold">React/TypeScript</strong> frontends at CRETelligent, and{" "}
+          <strong className="font-semibold">Node.js</strong> services on contract. Those codebases are private;{" "}
+          <a href="#stack" className="underline decoration-[var(--color-coral)] decoration-2 underline-offset-4 hover:decoration-current">see the full stack</a>.
+        </span>
       </figcaption>
     </figure>
   );

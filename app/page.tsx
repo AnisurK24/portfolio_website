@@ -554,7 +554,7 @@ async function GitHub() {
         <div className="mt-16 grid gap-14 md:mt-20 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-20">
           {summary && summary.languages.length > 0 && (
             <ScrollReveal>
-              <h3 className="mb-6 text-lg font-semibold">Languages</h3>
+              <h3 className="mb-6 text-lg font-semibold">Languages in public repos</h3>
               <LanguageBars languages={summary.languages} />
             </ScrollReveal>
           )}
