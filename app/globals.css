@@ -15,7 +15,7 @@
   --color-graphite: #22262a;
   --color-umber: #3a3632;
   --color-coral: #ff6b3d;
-  --color-orange: #ee6e3e;
+  --color-orange: #e98c39;
   --color-paper: #f3f1ec;
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
@@ -283,11 +283,11 @@ body {
    difference between decoded video color and the CSS color can't show a seam. */
 .scrub-feather {
   -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 14%);
+    linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, transparent 11%, #000 18%);
   -webkit-mask-composite: source-in;
   mask-image:
-    linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 14%);
+    linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, transparent 11%, #000 18%);
   mask-composite: intersect;
 }

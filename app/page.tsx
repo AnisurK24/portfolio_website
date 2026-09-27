@@ -9,7 +9,7 @@ import { FieldObserver } from "@/app/components/FieldObserver";
 import { HeroTyper } from "@/app/components/HeroTyper";
 import { IntegrationMap, type Specialty } from "@/app/components/IntegrationMap";
 import { Nav } from "@/app/components/Nav";
-import { CursorScrubVideo } from "@/app/components/CursorScrubVideo";
+import { GazeVideo } from "@/app/components/GazeVideo";
 import { ScrollReveal } from "@/app/components/ScrollReveal";
 import { Skills, type Skill } from "@/app/components/Skills";
 
@@ -47,6 +47,13 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 /* ------------------------------------------------------------------ */
+
+const GAZE_SEGMENTS = {
+  left: [0, 20],
+  right: [21, 38],
+  up: [39, 53],
+  down: [54, 74],
+} satisfies Record<string, [number, number]>;
 
 function Hero() {
   return (
@@ -97,20 +104,19 @@ function Hero() {
         </div>
       </div>
 
-      {/* 3D portrait: the cursor's position across the window turns his head
-          (left edge looks left, right edge looks right). Its background matches
-          the hero, and the edges are feathered, so it reads as one scene. */}
-      <div className="hero-drift pointer-events-none relative -mt-6 mx-auto aspect-[4/5] w-[min(100%,30rem)] lg:absolute lg:bottom-0 lg:right-[max(0px,calc((100vw-1400px)/2))] lg:mt-0 lg:h-[min(90%,860px)] lg:w-auto">
+      {/* Portrait video: the head turns toward the cursor in any direction.
+          Its background matches the hero and the edges are feathered, so it
+          reads as one scene. Frame ranges come from the source render. */}
+      <div className="hero-drift pointer-events-none relative -mt-6 mx-auto aspect-[640/806] w-[min(92%,26rem)] lg:absolute lg:bottom-0 lg:right-[max(1rem,calc((100vw-1400px)/2+1rem))] lg:mt-0 lg:h-[min(94%,1000px)] lg:w-auto">
         <div className="portrait-in h-full w-full">
-          <CursorScrubVideo
-            src="/hero-scrub.mp4"
-            poster="/hero-scrub-poster.webp"
-            trackingArea="window"
-            axis="horizontal"
-            initialProgress={0.55}
-            smoothing={0.12}
-            videoClassName="scrub-feather"
-            label="A 3D-rendered Anisur Khan in a black jacket and tan quarter-zip, smiling"
+          <GazeVideo
+            src="/hero-gaze.mp4"
+            poster="/hero-gaze-poster.webp"
+            fps={24}
+            segments={GAZE_SEGMENTS}
+            headAnchor={{ x: 0.4, y: 0.21 }}
+            mediaClassName="scrub-feather"
+            label="Anisur Khan in a black jacket and tan quarter-zip, smiling"
           />
         </div>
       </div>
