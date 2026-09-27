@@ -9,7 +9,7 @@ import { FieldObserver } from "@/app/components/FieldObserver";
 import { HeroTyper } from "@/app/components/HeroTyper";
 import { IntegrationMap, type Specialty } from "@/app/components/IntegrationMap";
 import { Nav } from "@/app/components/Nav";
-import { CursorScrubVideo } from "@/app/components/CursorScrubVideo";
+import { Portrait } from "@/app/components/Portrait";
 import { ScrollReveal } from "@/app/components/ScrollReveal";
 import { Skills, type Skill } from "@/app/components/Skills";
 
@@ -55,15 +55,14 @@ function Hero() {
       data-field="stone"
       className="relative flex min-h-[100dvh] flex-col overflow-clip pt-16 md:pt-[72px]"
     >
-      <div className={`${shell} relative z-10 grid flex-1 items-center gap-10 pb-10 pt-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-12 lg:pb-16`}>
-        <div>
+      <div className={`${shell} relative z-10 flex flex-1 flex-col justify-center pb-10 pt-10 lg:pb-16`}>
         <p className="fade-up text-xl leading-snug md:text-2xl" style={{ ["--i" as string]: 0 }}>
           Hello, I&apos;m Anisur Khan.
           <br />
           I build
         </p>
 
-        <h1 className="display mt-5 text-[11vw] sm:text-[clamp(3.4rem,8.3vw,6.5rem)] lg:text-[clamp(3.6rem,6.3vw,7rem)] md:mt-7">
+        <h1 className="display mt-5 text-[11vw] sm:text-[clamp(3.4rem,8.3vw,8.25rem)] md:mt-7">
           <span className="rise" style={{ ["--i" as string]: 1 }}>
             <span>Integrations.</span>
           </span>
@@ -91,24 +90,14 @@ function Hero() {
             <ArrowRight size={18} weight="bold" className="btn-arrow" />
           </a>
         </div>
-        </div>
+      </div>
 
-        {/* 3D portrait: the cursor anywhere on the page scrubs the video. */}
-        <div className="hero-drift flex w-full flex-col items-center lg:items-end">
-          <div className="portrait-in aspect-[4/5] w-[min(100%,24rem)] overflow-hidden rounded-2xl bg-[#ee6e3e] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.55)] lg:w-[min(100%,calc(min(72dvh,660px)*0.8))]">
-            <CursorScrubVideo
-              src="/hero-scrub.mp4"
-              poster="/hero-scrub-poster.webp"
-              trackingArea="window"
-              axis="horizontal"
-              smoothing={0.18}
-              label="A 3D-rendered Anisur Khan in a black jacket and tan quarter-zip, smiling"
-            />
-          </div>
-          <p className="muted mt-3 hidden text-sm [@media(hover:hover)_and_(pointer:fine)]:block">
-            Move your cursor across the page.
-          </p>
-        </div>
+      {/* Portrait: bleeds off the right and bottom edges, facing the copy. */}
+      <div
+        aria-hidden={false}
+        className="hero-drift pointer-events-none relative -mt-4 ml-auto mr-5 h-[52vh] w-[min(78vw,26rem)] self-end sm:h-[58vh] lg:absolute lg:bottom-0 lg:right-[max(2.5rem,calc((100vw-1400px)/2+2.5rem))] lg:mt-0 lg:h-[88%] lg:w-auto lg:aspect-[846/1600]"
+      >
+        <Portrait />
       </div>
     </section>
   );
