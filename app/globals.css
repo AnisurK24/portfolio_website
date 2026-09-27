@@ -39,7 +39,7 @@
 [data-field="ink"] { --field-bg: var(--color-ink); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
 [data-field="graphite"] { --field-bg: var(--color-graphite); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
 [data-field="umber"] { --field-bg: var(--color-umber); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
-/* Hero: matches the scrub video's flat background so the two read as one scene. */
+/* Hero: warm orange field; both portraits are cut out, so they sit on it directly. */
 [data-field="orange"] { --field-bg: var(--color-orange); --field-fg: var(--color-ink); --field-accent: var(--color-ink); --field-accent-fg: var(--color-paper); }
 [data-field="coral"] { --field-bg: var(--color-coral); --field-fg: var(--color-ink); --field-accent: var(--color-ink); --field-accent-fg: var(--color-paper); }
 
@@ -277,19 +277,6 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-caret { animation: none; }
-}
-
-/* Feathers the scrub video's edges into the hero background, so any tiny
-   difference between decoded video color and the CSS color can't show a seam. */
-.scrub-feather {
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 7%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 7%);
-  mask-composite: intersect;
 }
 
 /* Hero portrait switch: 3D render (on) vs the original photo (off). */

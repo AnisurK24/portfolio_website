@@ -1,16 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { GazeVideo } from "@/app/components/GazeVideo";
+import { GazeSequence } from "@/app/components/GazeSequence";
 import { Portrait } from "@/app/components/Portrait";
 
 type Mode = "3d" | "photo";
 
 const STORAGE_KEY = "hero-portrait";
 
-// Where the photo cutout sits inside the 640x720 video frame so the two
+// Where the photo cutout sits inside the 640x720 3D frame so the two
 // faces match: 406x768 px at (123, 99).
 const PHOTO_BOX = { left: "19.16%", top: "13.78%", width: "63.47%" } as const;
+
+// Transparent cut-out frames of the 3D render, 640x720, f00 to f87.
+const gazeFrame = (i: number) => `/hero-gaze/f${String(i).padStart(2, "0")}.webp`;
 
 const GAZE_SEGMENTS = {
   left: [0, 19],
@@ -72,25 +75,25 @@ export function HeroPortrait() {
       </button>
 
       {on ? (
-        // The head turns toward the cursor in any direction. Its background
-        // matches the hero and the edges are feathered, so it reads as one
-        // scene. Frame ranges come from the source render.
+        // The head turns toward the cursor in any direction. The frames are
+        // cut out (no background), so the figure sits on the page color
+        // like the photo does. Frame ranges come from the source render.
         <div className="portrait-in h-full w-full">
-          <GazeVideo
-            src="/hero-gaze.mp4"
-            poster="/hero-gaze-poster.webp"
-            fps={24}
+          <GazeSequence
+            frameSrc={gazeFrame}
+            frameCount={88}
+            width={640}
+            height={720}
             segments={GAZE_SEGMENTS}
             headAnchor={{ x: 0.44, y: 0.24 }}
-            mediaClassName="scrub-feather"
             label="Anisur Khan in a black jacket and tan quarter-zip, smiling"
           />
         </div>
       ) : (
         // The original photo, placed so its face lands exactly where the
-        // video's face is (face boxes measured in both: the cutout is scaled
+        // 3D face is (face boxes measured in both: the cutout is scaled
         // by 0.48 and offset to match). It runs past the bottom edge, so it
-        // is clipped there, where the video's figure also ends; the sides
+        // is clipped there, where the 3D figure also ends; the sides
         // stay open for the parallax.
         <div className="absolute inset-0 [clip-path:inset(-50%_-50%_0_-50%)]">
           <div className="absolute aspect-[846/1600]" style={PHOTO_BOX}>

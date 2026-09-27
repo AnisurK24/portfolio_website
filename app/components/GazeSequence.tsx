@@ -3,29 +3,32 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * GazeVideo: a portrait video whose head turns toward the cursor, in any
- * direction.
+ * GazeSequence: a transparent portrait whose head turns toward the cursor,
+ * in any direction.
  *
- * The video holds four short segments back to back, each running from a
- * forward-facing pose to a full turn: look left, look right, look up, look
- * down. The cursor's position relative to the head picks the dominant
- * direction and how far to turn. Switching direction eases the head back
- * through center first, the way a real head moves.
+ * The frames are cut-out WebP images (alpha, no background), so the figure
+ * sits on whatever the page color is. They hold four short turns back to
+ * back, each running from a forward-facing pose to a full turn: look left,
+ * look right, look up, look down. The cursor's position relative to the
+ * head picks the dominant direction and how far to turn. Switching direction
+ * eases the head back through center first, the way a real head moves.
  *
- * Encode every frame as a keyframe so seeks land instantly:
- *   ffmpeg ... -c:v libx264 -g 1 -keyint_min 1 -x264-params "scenecut=0" -an out.mp4
+ * Frames are preloaded and drawn to a canvas, so every "seek" is instant and
+ * it works the same in every browser (transparent video is not).
  *
- * Touch devices and reduced-motion users get the poster only; the video is
- * never downloaded for them.
+ * Touch devices and reduced-motion users get the first frame only; the rest
+ * are never downloaded for them.
  */
 export type Direction = "left" | "right" | "up" | "down";
 
 type Props = {
-  src: string;
-  poster: string;
-  /** Inclusive frame ranges within the video, [facing forward, full turn]. */
+  /** Frame URL for index i, e.g. (i) => `/hero-gaze/f${i}.webp`. */
+  frameSrc: (i: number) => string;
+  frameCount: number;
+  width: number;
+  height: number;
+  /** Inclusive frame ranges, [facing forward, full turn]. */
   segments: Record<Direction, [number, number]>;
-  fps: number;
   /** Where the head sits inside the element, as fractions (0 to 1). */
   headAnchor?: { x: number; y: number };
   /** 0.02 to 1. Higher is snappier. */
@@ -34,23 +37,22 @@ type Props = {
   deadzone?: number;
   label: string;
   className?: string;
-  mediaClassName?: string;
 };
 
-export function GazeVideo({
-  src,
-  poster,
+export function GazeSequence({
+  frameSrc,
+  frameCount,
+  width,
+  height,
   segments,
-  fps,
   headAnchor = { x: 0.5, y: 0.2 },
   smoothing = 0.14,
   deadzone = 0.06,
   label,
   className = "",
-  mediaClassName = "",
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [enabled, setEnabled] = useState(false);
   const [ready, setReady] = useState(false);
 
@@ -62,34 +64,46 @@ export function GazeVideo({
 
   useEffect(() => {
     if (!enabled) return;
-    const video = videoRef.current;
+    const canvas = canvasRef.current;
     const root = rootRef.current;
-    if (!video || !root) return;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !root || !ctx) return;
+
+    let cancelled = false;
+    const images: HTMLImageElement[] = [];
+    let canDraw = false;
 
     const k = Math.min(1, Math.max(0.02, smoothing));
-    // Seek to the middle of a frame so rounding never lands on its neighbor.
-    const frameTime = (f: number) => (f + 0.5) / fps;
-
     let targetDir: Direction = "left";
     let targetMag = 0;
     let dir: Direction = "left";
     let mag = 0;
-    let seeking = false;
-    let canSeek = false;
+    let drawn = -1;
     let raf = 0;
 
-    const onSeeking = () => { seeking = true; };
-    const onSeeked = () => { seeking = false; };
-    const onReady = () => {
-      video.currentTime = frameTime(segments.left[0]);
-      canSeek = true;
-      setReady(true);
+    const draw = (i: number) => {
+      const img = images[i];
+      if (!img || i === drawn) return;
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+      drawn = i;
     };
-    video.addEventListener("seeking", onSeeking);
-    video.addEventListener("seeked", onSeeked);
-    video.addEventListener("canplaythrough", onReady, { once: true });
-    video.load();
-    video.play().then(() => video.pause()).catch(() => {});
+
+    // Preload and decode every frame before taking over from the static one.
+    Promise.all(
+      Array.from({ length: frameCount }, (_, i) => {
+        const img = new Image();
+        img.decoding = "async";
+        img.src = frameSrc(i);
+        images[i] = img;
+        return img.decode().catch(() => {});
+      }),
+    ).then(() => {
+      if (cancelled) return;
+      draw(segments.left[0]);
+      canDraw = true;
+      setReady(true);
+    });
 
     const onMove = (e: PointerEvent) => {
       const r = root.getBoundingClientRect();
@@ -122,7 +136,7 @@ export function GazeVideo({
     };
 
     const tick = () => {
-      if (canSeek) {
+      if (canDraw) {
         if (targetDir !== dir) {
           // Return through center before turning another way.
           mag += (0 - mag) * Math.min(1, k * 1.6);
@@ -134,51 +148,47 @@ export function GazeVideo({
           mag += (targetMag - mag) * k;
         }
         const [a, b] = segments[dir];
-        const frame = Math.round(a + mag * (b - a));
-        const t = frameTime(frame);
-        if (!seeking && Math.abs(video.currentTime - t) > 0.5 / fps) {
-          video.currentTime = t;
-        }
+        draw(Math.round(a + mag * (b - a)));
       }
       raf = requestAnimationFrame(tick);
     };
+    raf = requestAnimationFrame(tick);
+
     // Face forward again when the cursor leaves the window.
     const onLeave = () => { targetMag = 0; };
 
-    raf = requestAnimationFrame(tick);
     window.addEventListener("pointermove", onMove, { passive: true });
     document.documentElement.addEventListener("pointerleave", onLeave);
 
     return () => {
+      cancelled = true;
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
       document.documentElement.removeEventListener("pointerleave", onLeave);
-      video.removeEventListener("seeking", onSeeking);
-      video.removeEventListener("seeked", onSeeked);
-      video.removeEventListener("canplaythrough", onReady);
     };
-  }, [enabled, fps, smoothing, deadzone, headAnchor.x, headAnchor.y, segments]);
+  }, [enabled, frameSrc, frameCount, width, height, smoothing, deadzone, headAnchor.x, headAnchor.y, segments]);
 
   return (
     <div ref={rootRef} className={`relative h-full w-full ${className}`}>
+      {/* The forward-facing frame: shown until the rest are ready, and the
+          whole experience on touch devices. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={poster}
+        src={frameSrc(segments.left[0])}
         alt={label}
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${mediaClassName}`}
+        width={width}
+        height={height}
+        fetchPriority="high"
+        className="absolute inset-0 h-full w-full"
         style={{ opacity: ready ? 0 : 1 }}
       />
       {enabled && (
-        <video
-          ref={videoRef}
-          src={src}
-          muted
-          playsInline
-          preload="auto"
-          disableRemotePlayback
+        <canvas
+          ref={canvasRef}
+          width={width}
+          height={height}
           aria-hidden
-          tabIndex={-1}
-          className={`absolute inset-0 h-full w-full object-cover ${mediaClassName}`}
+          className="absolute inset-0 h-full w-full"
         />
       )}
     </div>
