@@ -52,62 +52,66 @@ function Hero() {
   return (
     <section
       id="top"
-      data-field="stone"
+      data-field="orange"
       className="relative flex min-h-[100dvh] flex-col overflow-clip pt-16 md:pt-[72px]"
     >
-      <div className={`${shell} relative z-10 grid flex-1 items-center gap-10 pb-10 pt-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-12 lg:pb-16`}>
-        <div>
-        <p className="fade-up text-xl leading-snug md:text-2xl" style={{ ["--i" as string]: 0 }}>
-          Hello, I&apos;m Anisur Khan.
-          <br />
-          I build
-        </p>
-
-        <h1 className="display mt-5 text-[11vw] sm:text-[clamp(3.4rem,8.3vw,6.5rem)] lg:text-[clamp(3.6rem,6.3vw,7rem)] md:mt-7">
-          <span className="rise" style={{ ["--i" as string]: 1 }}>
-            <span>Integrations.</span>
-          </span>
-          <span className="rise" style={{ ["--i" as string]: 2 }}>
-            <span>Payment flows.</span>
-          </span>
-          <span className="rise" style={{ ["--i" as string]: 3 }}>
-            <span>
-              <HeroTyper phrases={["AI tools.", "Claude agents.", "MCP servers."]} />
-            </span>
-          </span>
-        </h1>
-
-        <p
-          className="fade-up mt-8 max-w-[34rem] text-lg leading-relaxed md:text-xl"
-          style={{ ["--i" as string]: 5 }}
-        >
-          Five years shipping React and Java/Spring features that connect SaaS
-          products to Salesforce, QuickBooks, HubSpot, and payment processors.
-        </p>
-
-        <div className="fade-up mt-9" style={{ ["--i" as string]: 6 }}>
-          <a href={`mailto:${EMAIL}`} className="btn btn-accent">
-            Email me
-            <ArrowRight size={18} weight="bold" className="btn-arrow" />
-          </a>
-        </div>
-        </div>
-
-        {/* 3D portrait: the cursor anywhere on the page scrubs the video. */}
-        <div className="hero-drift flex w-full flex-col items-center lg:items-end">
-          <div className="portrait-in aspect-[4/5] w-[min(100%,24rem)] overflow-hidden rounded-2xl bg-[#ee6e3e] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.55)] lg:w-[min(100%,calc(min(72dvh,660px)*0.8))]">
-            <CursorScrubVideo
-              src="/hero-scrub.mp4"
-              poster="/hero-scrub-poster.webp"
-              trackingArea="window"
-              axis="horizontal"
-              smoothing={0.18}
-              label="A 3D-rendered Anisur Khan in a black jacket and tan quarter-zip, smiling"
-            />
-          </div>
-          <p className="muted mt-3 hidden text-sm [@media(hover:hover)_and_(pointer:fine)]:block">
-            Move your cursor across the page.
+      <div className={`${shell} relative z-10 flex flex-1 flex-col justify-center pb-10 pt-10 lg:pb-16`}>
+        <div className="lg:max-w-[58%]">
+          <p className="fade-up text-xl leading-snug md:text-2xl" style={{ ["--i" as string]: 0 }}>
+            Hello, I&apos;m Anisur Khan.
+            <br />
+            I build
           </p>
+
+          <h1 className="display mt-5 text-[11vw] sm:text-[clamp(3.4rem,8.3vw,6.5rem)] lg:text-[clamp(3.6rem,6.3vw,7rem)] md:mt-7">
+            <span className="rise" style={{ ["--i" as string]: 1 }}>
+              <span>Integrations.</span>
+            </span>
+            <span className="rise" style={{ ["--i" as string]: 2 }}>
+              <span>Payment flows.</span>
+            </span>
+            <span className="rise" style={{ ["--i" as string]: 3 }}>
+              <span>
+                <HeroTyper phrases={["AI tools.", "Claude agents.", "MCP servers."]} />
+              </span>
+            </span>
+          </h1>
+
+          <p
+            className="fade-up mt-8 max-w-[34rem] text-lg leading-relaxed md:text-xl"
+            style={{ ["--i" as string]: 5 }}
+          >
+            Five years shipping React and Java/Spring features that connect SaaS
+            products to Salesforce, QuickBooks, HubSpot, and payment processors.
+          </p>
+
+          <div className="fade-up mt-9 flex flex-wrap items-center gap-x-6 gap-y-3" style={{ ["--i" as string]: 6 }}>
+            <a href={`mailto:${EMAIL}`} className="btn btn-accent">
+              Email me
+              <ArrowRight size={18} weight="bold" className="btn-arrow" />
+            </a>
+            <span className="muted hidden text-sm [@media(hover:hover)_and_(pointer:fine)]:inline">
+              Move your cursor. I&apos;ll look where you point.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* 3D portrait: the cursor's position across the window turns his head
+          (left edge looks left, right edge looks right). Its background matches
+          the hero, and the edges are feathered, so it reads as one scene. */}
+      <div className="hero-drift pointer-events-none relative -mt-6 mx-auto aspect-[4/5] w-[min(100%,30rem)] lg:absolute lg:bottom-0 lg:right-[max(0px,calc((100vw-1400px)/2))] lg:mt-0 lg:h-[min(90%,860px)] lg:w-auto">
+        <div className="portrait-in h-full w-full">
+          <CursorScrubVideo
+            src="/hero-scrub.mp4"
+            poster="/hero-scrub-poster.webp"
+            trackingArea="window"
+            axis="horizontal"
+            initialProgress={0.55}
+            smoothing={0.12}
+            videoClassName="scrub-feather"
+            label="A 3D-rendered Anisur Khan in a black jacket and tan quarter-zip, smiling"
+          />
         </div>
       </div>
     </section>

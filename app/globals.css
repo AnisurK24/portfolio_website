@@ -15,6 +15,7 @@
   --color-graphite: #22262a;
   --color-umber: #3a3632;
   --color-coral: #ff6b3d;
+  --color-orange: #ee6e3e;
   --color-paper: #f3f1ec;
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
@@ -25,10 +26,10 @@
 }
 
 :root {
-  --page-bg: var(--color-stone);
-  --page-fg: var(--color-paper);
-  --page-accent: var(--color-coral);
-  --page-accent-fg: var(--color-ink);
+  --page-bg: var(--color-orange);
+  --page-fg: var(--color-ink);
+  --page-accent: var(--color-ink);
+  --page-accent-fg: var(--color-paper);
   color-scheme: dark;
 }
 
@@ -38,6 +39,8 @@
 [data-field="ink"] { --field-bg: var(--color-ink); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
 [data-field="graphite"] { --field-bg: var(--color-graphite); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
 [data-field="umber"] { --field-bg: var(--color-umber); --field-fg: var(--color-paper); --field-accent: var(--color-coral); --field-accent-fg: var(--color-ink); }
+/* Hero: matches the scrub video's flat background so the two read as one scene. */
+[data-field="orange"] { --field-bg: var(--color-orange); --field-fg: var(--color-ink); --field-accent: var(--color-ink); --field-accent-fg: var(--color-paper); }
 [data-field="coral"] { --field-bg: var(--color-coral); --field-fg: var(--color-ink); --field-accent: var(--color-ink); --field-accent-fg: var(--color-paper); }
 
 section[data-field] {
@@ -51,10 +54,10 @@ html.story section[data-field] {
 }
 
 html.story {
-  --page-bg: var(--active-bg, var(--color-stone));
-  --page-fg: var(--active-fg, var(--color-paper));
-  --page-accent: var(--active-accent, var(--color-coral));
-  --page-accent-fg: var(--active-accent-fg, var(--color-ink));
+  --page-bg: var(--active-bg, var(--color-orange));
+  --page-fg: var(--active-fg, var(--color-ink));
+  --page-accent: var(--active-accent, var(--color-ink));
+  --page-accent-fg: var(--active-accent-fg, var(--color-paper));
 }
 
 html {
@@ -274,4 +277,17 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-caret { animation: none; }
+}
+
+/* Feathers the scrub video's edges into the hero background, so any tiny
+   difference between decoded video color and the CSS color can't show a seam. */
+.scrub-feather {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 14%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 16%, #000 84%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 14%);
+  mask-composite: intersect;
 }

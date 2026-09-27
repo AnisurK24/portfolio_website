@@ -41,7 +41,7 @@ export function HeroTyper({ phrases }: { phrases: string[] }) {
       <span className="sr-only">{phrases.join(", ")}</span>
       <span aria-hidden className="inline-flex items-baseline">
         <span>{phrases[idx].slice(0, count)}</span>
-        <span className="hero-caret ml-[0.04em] inline-block h-[0.78em] w-[0.07em] translate-y-[0.02em] bg-[var(--color-coral)]" />
+        <span className="hero-caret ml-[0.04em] inline-block h-[0.78em] w-[0.07em] translate-y-[0.02em] bg-current" />
       </span>
     </>
   );

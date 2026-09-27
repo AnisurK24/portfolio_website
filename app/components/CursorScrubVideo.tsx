@@ -28,7 +28,10 @@ type Props = {
   objectFit?: "cover" | "contain" | "fill";
   showPoster?: boolean;
   borderRadius?: number;
+  /** 0 to 1: where the playhead rests before the cursor moves. */
+  initialProgress?: number;
   className?: string;
+  videoClassName?: string;
   label: string;
 };
 
@@ -42,7 +45,9 @@ export function CursorScrubVideo({
   objectFit = "cover",
   showPoster = true,
   borderRadius = 0,
+  initialProgress = 0,
   className = "",
+  videoClassName = "",
   label,
 }: Props) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -64,8 +69,10 @@ export function CursorScrubVideo({
     if (!video || !root) return;
 
     const k = Math.min(1, Math.max(0.02, smoothing));
+    const start = Math.min(1, Math.max(0, initialProgress));
     let target = 0;
     let current = 0;
+    let moved = false;
     let seeking = false;
     let canScrub = false;
     let raf = 0;
@@ -73,6 +80,10 @@ export function CursorScrubVideo({
     const onSeeking = () => { seeking = true; };
     const onSeeked = () => { seeking = false; };
     const onReady = () => {
+      if (!moved && Number.isFinite(video.duration)) {
+        target = current = start * video.duration;
+        video.currentTime = current;
+      }
       canScrub = true;
       setReady(true);
     };
@@ -100,7 +111,10 @@ export function CursorScrubVideo({
       let pos = axis === "horizontal" ? x : y;
       pos = Math.min(1, Math.max(0, pos));
       if (reverse) pos = 1 - pos;
-      if (Number.isFinite(video.duration)) target = pos * video.duration;
+      if (Number.isFinite(video.duration)) {
+        target = pos * video.duration;
+        moved = true;
+      }
     };
 
     const tick = () => {
@@ -124,7 +138,7 @@ export function CursorScrubVideo({
       video.removeEventListener("seeked", onSeeked);
       video.removeEventListener("canplaythrough", onReady);
     };
-  }, [enabled, axis, reverse, trackingArea, smoothing]);
+  }, [enabled, axis, reverse, trackingArea, smoothing, initialProgress]);
 
   const radius = { borderRadius };
 
@@ -137,7 +151,7 @@ export function CursorScrubVideo({
         <img
           src={poster}
           alt={label}
-          className="absolute inset-0 h-full w-full transition-opacity duration-300"
+          className={`absolute inset-0 h-full w-full transition-opacity duration-300 ${videoClassName}`}
           style={{ objectFit, opacity: ready ? 0 : 1, ...radius }}
         />
       )}
@@ -151,7 +165,7 @@ export function CursorScrubVideo({
           disableRemotePlayback
           aria-hidden
           tabIndex={-1}
-          className="absolute inset-0 h-full w-full"
+          className={`absolute inset-0 h-full w-full ${videoClassName}`}
           style={{ objectFit, ...radius }}
         />
       )}
