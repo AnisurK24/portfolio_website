@@ -8,6 +8,11 @@ type Mode = "3d" | "photo";
 
 const STORAGE_KEY = "hero-portrait";
 
+// The 3D portrait is switched off for now: the hero shows only the original
+// photo, with no switch, and none of the 3D frames are downloaded. Set this
+// to true to bring back the 3D portrait and the switch.
+const ENABLE_3D = false;
+
 // Where the photo cutout sits inside the 640x720 3D frame so the two
 // faces match: 406x768 px at (123, 99).
 const PHOTO_BOX = { left: "19.16%", top: "13.78%", width: "63.47%" } as const;
@@ -33,6 +38,7 @@ export function HeroPortrait() {
   const [mode, setMode] = useState<Mode>("3d");
 
   useEffect(() => {
+    if (!ENABLE_3D) return;
     try {
       if (localStorage.getItem(STORAGE_KEY) === "photo") setMode("photo");
     } catch {
@@ -41,7 +47,7 @@ export function HeroPortrait() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.dataset.portrait = mode;
+    document.documentElement.dataset.portrait = ENABLE_3D ? mode : "photo";
   }, [mode]);
 
   const toggle = () => {
@@ -55,6 +61,16 @@ export function HeroPortrait() {
   };
 
   const on = mode === "3d";
+
+  if (!ENABLE_3D) {
+    // The original hero photo, at its original size and placement: bleeds
+    // off the right and bottom edges, facing the copy.
+    return (
+      <div className="hero-drift pointer-events-none relative -mt-4 ml-auto mr-5 h-[52vh] w-[min(78vw,26rem)] self-end sm:h-[58vh] lg:absolute lg:bottom-0 lg:right-[max(2.5rem,calc((100vw-1400px)/2+2.5rem))] lg:mt-0 lg:h-[88%] lg:w-auto lg:aspect-[846/1600]">
+        <Portrait />
+      </div>
+    );
+  }
 
   return (
     <div className="hero-drift pointer-events-none relative -mt-6 mx-auto aspect-[640/720] w-[min(92%,26rem)] lg:absolute lg:bottom-0 lg:right-[max(1rem,calc((100vw-1400px)/2+1rem))] lg:mt-0 lg:h-[min(94%,1000px)] lg:w-auto">
