@@ -15,7 +15,7 @@
   --color-graphite: #22262a;
   --color-umber: #3a3632;
   --color-coral: #ff6b3d;
-  --color-orange: #e98c39;
+  --color-orange: #f07a47;
   --color-paper: #f3f1ec;
 
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
@@ -284,10 +284,59 @@ body {
 .scrub-feather {
   -webkit-mask-image:
     linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, transparent 11%, #000 18%);
+    linear-gradient(to bottom, transparent 0, #000 7%);
   -webkit-mask-composite: source-in;
   mask-image:
     linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, transparent 11%, #000 18%);
+    linear-gradient(to bottom, transparent 0, #000 7%);
   mask-composite: intersect;
 }
+
+/* Hero portrait switch: 3D render (on) vs the original photo (off). */
+.portrait-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.65rem 0.3rem 0.3rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-ink) 10%, transparent);
+  color: var(--color-ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 200ms ease, transform 160ms var(--ease-out-strong);
+}
+.portrait-switch:active { transform: scale(0.96); }
+.portrait-switch:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+.portrait-switch-track {
+  position: relative;
+  width: 2.1rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--color-ink) 28%, transparent);
+  transition: background-color 200ms ease;
+}
+.portrait-switch-thumb {
+  position: absolute;
+  top: 0.15rem;
+  left: 0.15rem;
+  width: 0.95rem;
+  height: 0.95rem;
+  border-radius: 999px;
+  background: var(--color-paper);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+  transition: transform 220ms var(--ease-out-strong);
+}
+.portrait-switch[aria-checked="true"] .portrait-switch-track { background: var(--color-ink); }
+.portrait-switch[aria-checked="true"] .portrait-switch-thumb { transform: translateX(0.85rem); }
+@media (hover: hover) and (pointer: fine) {
+  .portrait-switch:hover { background: color-mix(in oklab, var(--color-ink) 16%, transparent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portrait-switch, .portrait-switch-track, .portrait-switch-thumb { transition: none; }
+}
+
+/* The "I'll look where you point" hint only fits the 3D portrait. */
+html[data-portrait="photo"] .gaze-hint { display: none !important; }

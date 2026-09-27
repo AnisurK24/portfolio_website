@@ -109,7 +109,10 @@ export function GazeVideo({
         targetMag = 0;
         return;
       }
-      if (ax >= ay) {
+      // Hysteresis on the diagonal: keep the current axis unless the other
+      // one clearly wins, so the head doesn't flicker between sideways and up.
+      const horizontalNow = targetDir === "left" || targetDir === "right";
+      if (horizontalNow ? ax * 1.15 >= ay : ax > ay * 1.15) {
         targetDir = nx < 0 ? "left" : "right";
         targetMag = ax;
       } else {
@@ -139,12 +142,17 @@ export function GazeVideo({
       }
       raf = requestAnimationFrame(tick);
     };
+    // Face forward again when the cursor leaves the window.
+    const onLeave = () => { targetMag = 0; };
+
     raf = requestAnimationFrame(tick);
     window.addEventListener("pointermove", onMove, { passive: true });
+    document.documentElement.addEventListener("pointerleave", onLeave);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("pointermove", onMove);
+      document.documentElement.removeEventListener("pointerleave", onLeave);
       video.removeEventListener("seeking", onSeeking);
       video.removeEventListener("seeked", onSeeked);
       video.removeEventListener("canplaythrough", onReady);

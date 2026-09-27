@@ -9,7 +9,7 @@ import { FieldObserver } from "@/app/components/FieldObserver";
 import { HeroTyper } from "@/app/components/HeroTyper";
 import { IntegrationMap, type Specialty } from "@/app/components/IntegrationMap";
 import { Nav } from "@/app/components/Nav";
-import { GazeVideo } from "@/app/components/GazeVideo";
+import { HeroPortrait } from "@/app/components/HeroPortrait";
 import { ScrollReveal } from "@/app/components/ScrollReveal";
 import { Skills, type Skill } from "@/app/components/Skills";
 
@@ -48,13 +48,6 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 
 /* ------------------------------------------------------------------ */
 
-const GAZE_SEGMENTS = {
-  left: [0, 20],
-  right: [21, 38],
-  up: [39, 53],
-  down: [54, 74],
-} satisfies Record<string, [number, number]>;
-
 function Hero() {
   return (
     <section
@@ -62,8 +55,10 @@ function Hero() {
       data-field="orange"
       className="relative flex min-h-[100dvh] flex-col overflow-clip pt-16 md:pt-[72px]"
     >
-      <div className={`${shell} relative z-10 flex flex-1 flex-col justify-center pb-10 pt-10 lg:pb-16`}>
-        <div className="lg:max-w-[58%]">
+      {/* The copy layer spans the hero; only the text column takes clicks, so
+          the portrait switch underneath it stays reachable. */}
+      <div className={`${shell} pointer-events-none relative z-10 flex flex-1 flex-col justify-center pb-10 pt-10 lg:pb-16`}>
+        <div className="pointer-events-auto lg:max-w-[58%]">
           <p className="fade-up text-xl leading-snug md:text-2xl" style={{ ["--i" as string]: 0 }}>
             Hello, I&apos;m Anisur Khan.
             <br />
@@ -97,29 +92,14 @@ function Hero() {
               Email me
               <ArrowRight size={18} weight="bold" className="btn-arrow" />
             </a>
-            <span className="muted hidden text-sm [@media(hover:hover)_and_(pointer:fine)]:inline">
+            <span className="gaze-hint muted hidden text-sm [@media(hover:hover)_and_(pointer:fine)]:inline">
               Move your cursor. I&apos;ll look where you point.
             </span>
           </div>
         </div>
       </div>
 
-      {/* Portrait video: the head turns toward the cursor in any direction.
-          Its background matches the hero and the edges are feathered, so it
-          reads as one scene. Frame ranges come from the source render. */}
-      <div className="hero-drift pointer-events-none relative -mt-6 mx-auto aspect-[640/806] w-[min(92%,26rem)] lg:absolute lg:bottom-0 lg:right-[max(1rem,calc((100vw-1400px)/2+1rem))] lg:mt-0 lg:h-[min(94%,1000px)] lg:w-auto">
-        <div className="portrait-in h-full w-full">
-          <GazeVideo
-            src="/hero-gaze.mp4"
-            poster="/hero-gaze-poster.webp"
-            fps={24}
-            segments={GAZE_SEGMENTS}
-            headAnchor={{ x: 0.4, y: 0.21 }}
-            mediaClassName="scrub-feather"
-            label="Anisur Khan in a black jacket and tan quarter-zip, smiling"
-          />
-        </div>
-      </div>
+      <HeroPortrait />
     </section>
   );
 }
