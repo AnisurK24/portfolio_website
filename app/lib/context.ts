@@ -33,7 +33,7 @@ In the last 18 months at CRETelligent, Anisur shipped 100+ pull requests across 
 
 Major work:
 
-- Self-service subscription rebuild on Radius (Q1-Q2 2026). End-to-end work across React frontend and Java/Spring backend: multi-step email verification, USAePay payment integration with credit-card surcharge logic, Starter monthly billing tier, asynchronous payment orchestration, credit-card legal-terms gating.
+- Self-service subscription rebuild on Radius (Q1-Q2 2026). Anisur designed the full flow, including sign-up with multi-step email verification (a teammate implemented that part from his design), and built the payment side himself across React and Java/Spring: USAePay payment integration with credit-card surcharge logic, Starter monthly billing tier, asynchronous payment orchestration, credit-card legal-terms gating.
 
 - Salesforce integration layer between Radius and the CRM. Auto-push for proposals, vendor lifecycle API sync with the Connect platform, Salesforce-Quire document routing, BulkLoad-aware data sync.
 

@@ -184,7 +184,7 @@ const SKILLS: Skill[] = [
     name: "Payments and billing",
     where: "CRETelligent, Q1 to Q2 2026",
     proof:
-      "Rebuilt self-service subscriptions end to end: USAePay integration with credit-card surcharge logic, a Starter monthly tier, legal-terms gating, and asynchronous payment orchestration.",
+      "Designed self-service subscriptions and built the payment side: USAePay integration with credit-card surcharge logic, a Starter monthly tier, legal-terms gating, and asynchronous payment orchestration.",
   },
   {
     name: "Data sync and reconciliation",
@@ -353,9 +353,9 @@ const PROJECTS: Project[] = [
     title: "Self-service subscriptions and payments",
     context: "CRETelligent, Radius platform, 2026",
     summary:
-      "Rebuilt how customers sign up and pay, across a React frontend and a Java/Spring backend.",
+      "Designed how customers sign up and pay, and built the payment side across a React frontend and a Java/Spring backend.",
     points: [
-      "Multi-step email verification before account creation",
+      "Designed the sign-up flow, with multi-step email verification before account creation",
       "USAePay integration with credit-card surcharge logic and legal-terms gating",
       "Starter monthly billing tier and asynchronous payment orchestration",
       "Invoice sync into QuickBooks from the async order flow",
