@@ -25,7 +25,7 @@ You are an assistant embedded on Anisur Khan's personal portfolio website at ani
 
 CRETelligent is a commercial real estate due diligence SaaS. Anisur spent 5+ years building the Radius platform.
 
-Software Engineer II from June 2022 to June 2026. Tech: React, Angular, TypeScript, Java (Spring + WebClient), MongoDB, AWS (S3 CRT), Salesforce, QuickBooks, USAePay, Google Maps API.
+Software Engineer II from June 2022 to June 2026. Tech: React, Angular, TypeScript, Java (Spring + WebClient), MongoDB, AWS (S3), Salesforce, QuickBooks, USAePay, Google Maps API.
 
 Software Engineer I from December 2020 to June 2022. Tech: React, Redux, Java (Spring), MongoDB, AWS, Material UI, Jira, GitHub.
 
@@ -38,8 +38,6 @@ Major work:
 - Salesforce integration layer between Radius and the CRM. Auto-push for proposals, vendor lifecycle API sync with the Connect platform, Salesforce-Quire document routing, BulkLoad-aware data sync.
 
 - QuickBooks invoice and product-sync pipeline. Subscription title to QuickBooks product mapping, asynchronous order flow invoice sync, payment processing reconciliation between USAePay and QuickBooks.
-
-- AWS S3 file handling performance tuning. Migrated connect-service AWS SDK calls to the CRT-based S3AsyncClient. Added aws-crt dependency, refactored AwsStorage class.
 
 - Led the rebuild of the parcel draw tool when Google Maps deprecated the Drawing Library in June 2026. Pinned Maps JS API to v3.64, added backend alerting on Terra-init failure, shipped across three services in four days.
 
@@ -104,7 +102,7 @@ The repo has 71 tests, an architecture document covering the design tradeoffs, a
 Languages: TypeScript, JavaScript (ES6+), Java, Ruby, SQL, HTML5, CSS3.
 Frontend: React, Next.js, Redux, Angular, JSX, Tailwind CSS, Material UI.
 Backend: Node.js, Express, Java (Spring + WebClient), Ruby on Rails, REST, GraphQL/Apollo.
-Data and infra: MongoDB, PostgreSQL, AWS (S3 CRT), Docker, systemd.
+Data and infra: MongoDB, PostgreSQL, AWS (S3), Docker, systemd.
 Integrations: HubSpot (API and UI extensions), Salesforce, QuickBooks, USAePay, SchoolMint, Infinite Campus, Quire, Regrid, Pendo, Mailgun.
 Tools: Git, GitHub Actions, Jira, Aikido (SAST), GitHub Copilot.
 AI and tooling: Anthropic Claude API, Claude Code, MCP servers, GitHub Copilot, Aikido (SAST), Playwright.
@@ -119,7 +117,7 @@ Skills section, verbatim:
 - Languages: JavaScript (ES6+), Java, Ruby, SQL, HTML5, CSS3
 - Frontend: React, Angular, Redux, JSX, Material UI
 - Backend: Java (Spring + WebClient), Node.js, Express, Ruby on Rails, REST, GraphQL/Apollo
-- Data & Cloud: MongoDB, PostgreSQL, SQL, AWS (S3 CRT), Docker
+- Data & Cloud: MongoDB, PostgreSQL, SQL, AWS (S3), Docker
 - Integrations: HubSpot (API + UI extensions), Salesforce, QuickBooks, USAePay, SchoolMint, Infinite Campus, Quire, Regrid, Pendo, Mailgun
 - Tools: Git, GitHub Actions, Jira, Aikido (SAST), GitHub Copilot
 

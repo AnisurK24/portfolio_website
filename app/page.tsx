@@ -205,10 +205,10 @@ const SKILLS: Skill[] = [
       "When Google Maps deprecated its Drawing Library, I led the parcel draw tool rebuild: pinned the Maps JS API, added backend alerting, and shipped across three services in four days.",
   },
   {
-    name: "Performance tuning",
-    where: "CRETelligent, connect-service",
+    name: "Data consistency",
+    where: "CRETelligent, Salesforce integration",
     proof:
-      "Moved S3 file handling to the CRT-based S3AsyncClient, added the aws-crt dependency, and refactored the AwsStorage class around it.",
+      "Extended the Salesforce integration with triggers across the order tracker, and added optimistic locking with a version number so concurrent updates can't overwrite newer data.",
   },
   {
     name: "LLM orchestration",
@@ -245,7 +245,7 @@ const STACK = [
   { label: "Languages", items: ["TypeScript", "JavaScript", "Java", "SQL", "HTML", "CSS"], span: "lg:col-span-4" },
   { label: "Frontend", items: ["React", "Next.js", "Redux", "Angular", "Tailwind CSS", "Material UI"], span: "lg:col-span-4" },
   { label: "Backend", items: ["Node.js", "Express", "Java (Spring, WebClient)", "REST", "GraphQL"], span: "lg:col-span-4" },
-  { label: "Data and infra", items: ["MongoDB", "PostgreSQL", "AWS S3 (CRT)", "Docker", "Git", "GitHub Actions"], span: "lg:col-span-5" },
+  { label: "Data and infra", items: ["MongoDB", "PostgreSQL", "AWS S3", "Docker", "Git", "GitHub Actions"], span: "lg:col-span-5" },
   { label: "AI and tooling", items: ["Claude API", "Claude Code", "MCP servers", "GitHub Copilot", "Aikido (SAST)", "Playwright"], span: "lg:col-span-7" },
 ];
 
