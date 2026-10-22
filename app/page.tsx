@@ -136,19 +136,22 @@ function About() {
           <ScrollReveal>
             <p className="max-w-[30ch] text-[clamp(1.75rem,3vw,2.6rem)] font-medium leading-[1.15] tracking-[-0.02em]">
               I build products end to end: the screen a customer signs up and
-              pays on, the services behind it, and the AI tools that make the
-              work faster.
+              pays on, the services behind it, and AI tools that check their
+              own work.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={120}>
             <p className="muted mt-10 max-w-[60ch] text-lg leading-relaxed">
               For five and a half years I built the Radius platform at
-              CRETelligent, a commercial real estate due diligence SaaS. In my
-              last 18 months there I shipped 100+ pull requests across five
-              services, from React frontends to Java/Spring backends. Since March
-              2026 I have owned ten production HubSpot integrations at Hive
-              Strategy, as a Senior Full Stack Software Engineer. Lately I build Claude-based
-              tools that check their own output before a person ever reads it.
+              CRETelligent, a commercial real estate due diligence SaaS. I led
+              the rebuild of self-service subscriptions so customers could sign
+              up and pay without talking to sales, which brought in $150K a year
+              in additional revenue, and shipped 100+ pull requests across React
+              frontends and Java/Spring backends. Since March 2026 I&apos;ve owned
+              ten production HubSpot integrations at Hive Strategy as a Senior
+              Full Stack Software Engineer. On my own time I build AI tools with
+              Claude, like transcript-insights, where three agents check their
+              own output before anyone reads it.
             </p>
           </ScrollReveal>
           <dl className="mt-14 grid gap-x-10 gap-y-8 sm:grid-cols-2">
@@ -366,6 +369,21 @@ const PROJECTS: Project[] = [
     tint: "#2a2724",
   },
   {
+    title: "transcript-insights",
+    context: "Open source, TypeScript",
+    summary:
+      "A meeting transcript analyzer where three Claude agents read the same transcript in parallel, in about ten seconds.",
+    points: [
+      "Agents for decisions and action items, business context, and interpersonal dynamics",
+      "Zod schema validation, with the exact error fed back to the model on retry",
+      "Grounding check: invented quotes, people, or deadlines get sent back for correction",
+      "71 tests, an architecture doc, and committed sample output",
+    ],
+    tags: ["TypeScript", "Claude API", "Zod", "Multi-agent"],
+    links: [{ label: "Source", href: "https://github.com/AnisurK24/transcript-insights" }],
+    tint: "#1f2b28",
+  },
+  {
     title: "CRM and accounting integration layer",
     context: "CRETelligent, Radius platform, 2020 to 2026",
     summary:
@@ -397,21 +415,6 @@ const PROJECTS: Project[] = [
     tags: ["Node.js", "HubSpot API", "HubSpot UI extensions", "SchoolMint", "Infinite Campus", "NetSuite", "SFTP", "AWS"],
     note: "Client codebases, private",
     tint: "#2b2f35",
-  },
-  {
-    title: "transcript-insights",
-    context: "Open source, TypeScript",
-    summary:
-      "A meeting transcript analyzer where three Claude agents read the same transcript in parallel, in about ten seconds.",
-    points: [
-      "Agents for decisions and action items, business context, and interpersonal dynamics",
-      "Zod schema validation, with the exact error fed back to the model on retry",
-      "Grounding check: invented quotes, people, or deadlines get sent back for correction",
-      "71 tests, an architecture doc, and committed sample output",
-    ],
-    tags: ["TypeScript", "Claude API", "Zod", "Multi-agent"],
-    links: [{ label: "Source", href: "https://github.com/AnisurK24/transcript-insights" }],
-    tint: "#1f2b28",
   },
   {
     title: "Claude Code automation system",
