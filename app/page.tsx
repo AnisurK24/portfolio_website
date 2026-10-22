@@ -108,9 +108,9 @@ function Hero() {
 
 const FACTS = [
   { k: "Based in", v: "Sacramento, CA" },
-  { k: "Experience", v: "5+ years. Software Engineer II at CRETelligent (Dec 2020 to Jun 2026), and a Senior Integrations Developer on contract since April 2026" },
+  { k: "Experience", v: "5+ years. Senior Full Stack Software Engineer at Hive Strategy since March 2026. Before that, CRETelligent (Dec 2020 to Jun 2026)" },
   { k: "Education", v: "App Academy (1500+ hour immersive). UC Davis, B.S. Biology" },
-  { k: "Looking for", v: "Senior full-stack and integrations roles, including contract" },
+  { k: "Looking for", v: "Senior full-stack and integrations roles" },
 ];
 
 function About() {
@@ -144,9 +144,9 @@ function About() {
               For five and a half years I built the Radius platform at
               CRETelligent, a commercial real estate due diligence SaaS. In my
               last 18 months there I shipped 100+ pull requests across five
-              services, from React frontends to Java/Spring backends. Since April
-              2026 I have run a portfolio of production HubSpot integrations
-              on contract, as a Senior Integrations Developer. Lately I build Claude-based
+              services, from React frontends to Java/Spring backends. Since March
+              2026 I have owned ten production HubSpot integrations at Hive
+              Strategy, as a Senior Full Stack Software Engineer. Lately I build Claude-based
               tools that check their own output before a person ever reads it.
             </p>
           </ScrollReveal>
@@ -176,21 +176,21 @@ const SKILLS: Skill[] = [
   },
   {
     name: "HubSpot integrations",
-    where: "Senior Integrations Developer, contract, April 2026 to present",
+    where: "Senior Full Stack Software Engineer, Hive Strategy, March 2026 to present",
     proof:
-      "Took over production syncs into HubSpot from SchoolMint, Infinite Campus, NetSuite, and SFTP feeds: designed observability across services, put every bulk data change behind a dry run or a rollback log, and removed the failure behind about 6,900 rejected upserts per run.",
+      "Built new APIs and moved the integration servers to AWS. Took over production syncs into HubSpot from SchoolMint, Infinite Campus, NetSuite, and SFTP feeds: designed observability across services, put every bulk data change behind a dry run or a rollback log, and removed the failure behind about 6,900 rejected upserts per run.",
   },
   {
     name: "Payments and billing",
     where: "CRETelligent, Q1 to Q2 2026",
     proof:
-      "Designed self-service subscriptions and built the payment side: USAePay integration with credit-card surcharge logic, a Starter monthly tier, legal-terms gating, and asynchronous payment orchestration.",
+      "Designed self-service subscriptions and built the payment side: USAePay integration with credit-card surcharge logic, a Starter monthly tier, legal-terms gating, and asynchronous payment orchestration. It brought in 10+ new self-serve customers a month and $150K a year in additional revenue.",
   },
   {
     name: "Data sync and reconciliation",
     where: "CRETelligent, QuickBooks pipeline",
     proof:
-      "Mapped subscription titles to QuickBooks products, synced invoices from the asynchronous order flow, and reconciled USAePay payments against the books.",
+      "Mapped subscription titles to QuickBooks products, synced invoices from the asynchronous order flow, and reconciled USAePay payments against the books, saving accounting about 15 hours a month.",
   },
   {
     name: "Full-stack features",
@@ -202,7 +202,7 @@ const SKILLS: Skill[] = [
     name: "Shipping under pressure",
     where: "CRETelligent, June 2026",
     proof:
-      "When Google Maps deprecated its Drawing Library, I led the parcel draw tool rebuild: pinned the Maps JS API, added backend alerting, and shipped across three services in four days.",
+      "When Google Maps deprecated its Drawing Library, I restored parcel drawing for customers the same day (pinned the Maps JS API, added backend alerting), then led the rebuild across three services in four days.",
   },
   {
     name: "Data consistency",
@@ -245,7 +245,7 @@ const STACK = [
   { label: "Languages", items: ["TypeScript", "JavaScript", "Java", "SQL", "HTML", "CSS"], span: "lg:col-span-4" },
   { label: "Frontend", items: ["React", "Next.js", "Redux", "Angular", "Tailwind CSS", "Material UI"], span: "lg:col-span-4" },
   { label: "Backend", items: ["Node.js", "Express", "Java (Spring, WebClient)", "REST", "GraphQL"], span: "lg:col-span-4" },
-  { label: "Data and infra", items: ["MongoDB", "PostgreSQL", "AWS S3", "Docker", "Git", "GitHub Actions"], span: "lg:col-span-5" },
+  { label: "Data and infra", items: ["MongoDB", "PostgreSQL", "AWS", "Docker", "Git", "GitHub Actions"], span: "lg:col-span-5" },
   { label: "AI and tooling", items: ["Claude API", "Claude Code", "MCP servers", "GitHub Copilot", "Aikido (SAST)", "Playwright"], span: "lg:col-span-7" },
 ];
 
@@ -353,7 +353,7 @@ const PROJECTS: Project[] = [
     title: "Self-service subscriptions and payments",
     context: "CRETelligent, Radius platform, 2026",
     summary:
-      "Designed how customers sign up and pay, and built the payment side across a React frontend and a Java/Spring backend.",
+      "Designed how customers sign up and pay without going through sales, and built the payment side across a React frontend and a Java/Spring backend. It brought in 10+ new self-serve customers a month and $150K a year in additional revenue.",
     points: [
       "Designed the sign-up flow, with multi-step email verification before account creation",
       "USAePay integration with credit-card surcharge logic and legal-terms gating",
@@ -381,10 +381,11 @@ const PROJECTS: Project[] = [
   },
   {
     title: "Taking over a HubSpot integration portfolio",
-    context: "Senior Integrations Developer, contract, April 2026 to present",
+    context: "Senior Full Stack Software Engineer, Hive Strategy, March 2026 to present",
     summary:
       "Stepped in as successor to the outgoing lead developer on production Node.js syncs that feed HubSpot from school enrollment systems, NetSuite, and SFTP sales feeds.",
     points: [
+      "Built new APIs and moved the integration servers to AWS for faster, more reliable, secure syncs",
       "Mapped ownership and continuity risk across ten production integrations, flagging single points of support",
       "Designed cross-service sync observability: a shared status writer, an authenticated status endpoint, and a HubSpot app banner",
       "Gated bulk data changes behind dry runs and rollback logs, including a 3,213-contact cleanup and a 43,700-deal backfill",
@@ -392,7 +393,7 @@ const PROJECTS: Project[] = [
       "Removed a failure class: E.164 phone normalization cleared about 6,900 rejected upserts per run",
       "Cut alert noise: the hourly ops digest now fires only on real failures",
     ],
-    tags: ["Node.js", "HubSpot API", "HubSpot UI extensions", "SchoolMint", "Infinite Campus", "NetSuite", "SFTP", "systemd"],
+    tags: ["Node.js", "HubSpot API", "HubSpot UI extensions", "SchoolMint", "Infinite Campus", "NetSuite", "SFTP", "AWS"],
     note: "Client codebases, private",
     tint: "#2b2f35",
   },
@@ -613,8 +614,7 @@ function Contact() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <p className="mt-8 max-w-[40ch] text-xl leading-relaxed">
-            I&apos;m open to senior full-stack and integrations roles, including
-            contract. Email is the fastest way to reach me.
+            I&apos;m open to senior full-stack and integrations roles. Email is the fastest way to reach me.
           </p>
         </ScrollReveal>
         <ScrollReveal delay={160}>

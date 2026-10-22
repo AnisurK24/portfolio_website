@@ -66,7 +66,7 @@ export function LanguageBars({ languages, frameworks = [] }: { languages: Langua
         <span>
           Professionally I shipped <strong className="font-semibold">Java (Spring)</strong> backends and{" "}
           <strong className="font-semibold">React/TypeScript</strong> frontends at CRETelligent, and{" "}
-          <strong className="font-semibold">Node.js</strong> services on contract. Those codebases are private;{" "}
+          <strong className="font-semibold">Node.js</strong> services at Hive Strategy. Those codebases are private;{" "}
           <a href="#stack" className="underline decoration-[var(--color-coral)] decoration-2 underline-offset-4 hover:decoration-current">see the full stack</a>.
         </span>
       </figcaption>
