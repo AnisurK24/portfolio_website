@@ -2,7 +2,7 @@
   "name": "anisur-khan-portfolio",
   "version": "2.0.0",
   "private": true,
-  "description": "Personal portfolio for Anisur Khan, full-stack engineer specializing in SaaS integrations.",
+  "description": "Personal portfolio for Anisur Khan, full-stack engineer building products and AI tools.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

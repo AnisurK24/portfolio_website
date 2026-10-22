@@ -23,11 +23,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Anisur Khan · Full-Stack Engineer",
   description:
-    "Full-stack engineer specializing in SaaS integrations and AI tooling. 5+ years building Salesforce, QuickBooks, HubSpot, USAePay, and Quire integrations on React + Java services.",
+    "Full-stack engineer (React, Node.js, Java/Spring) with 5+ years building products end to end, from self-service payments to production integrations, plus AI tools built on Claude.",
   keywords: [
     "Anisur Khan",
     "Full Stack Engineer",
-    "SaaS Integrations",
+    "Product Engineer",
+    "AI Engineer",
     "Salesforce",
     "QuickBooks",
     "Claude API",
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Anisur Khan · Full-Stack Engineer",
     description:
-      "Full-stack engineer specializing in SaaS integrations and AI tooling.",
+      "Full-stack engineer building products and AI tools.",
     url: siteUrl,
     siteName: "Anisur Khan",
     images: [
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Anisur Khan · Full-Stack Engineer",
     description:
-      "Full-stack engineer specializing in SaaS integrations and AI tooling.",
+      "Full-stack engineer building products and AI tools.",
     images: ["/profile.jpg"],
   },
   robots: {

@@ -67,7 +67,7 @@ function Hero() {
 
           <h1 className="display mt-5 text-[11vw] sm:text-[clamp(3.4rem,8.3vw,6.5rem)] lg:text-[clamp(3.6rem,6.3vw,7rem)] md:mt-7">
             <span className="rise" style={{ ["--i" as string]: 1 }}>
-              <span>Integrations.</span>
+              <span>Products.</span>
             </span>
             <span className="rise" style={{ ["--i" as string]: 2 }}>
               <span>Payment flows.</span>
@@ -83,8 +83,9 @@ function Hero() {
             className="fade-up mt-8 max-w-[34rem] text-lg leading-relaxed md:text-xl"
             style={{ ["--i" as string]: 5 }}
           >
-            Five years shipping React and Java/Spring features that connect SaaS
-            products to Salesforce, QuickBooks, HubSpot, and payment processors.
+            Five years shipping full-stack features in React, Node.js, and
+            Java/Spring, from self-service payments to production integrations,
+            plus AI tools built on Claude.
           </p>
 
           <div className="fade-up mt-9 flex flex-wrap items-center gap-x-6 gap-y-3" style={{ ["--i" as string]: 6 }}>
@@ -110,7 +111,7 @@ const FACTS = [
   { k: "Based in", v: "Sacramento, CA" },
   { k: "Experience", v: "5+ years. Senior Full Stack Software Engineer at Hive Strategy since March 2026. Before that, CRETelligent (Dec 2020 to Jun 2026)" },
   { k: "Education", v: "App Academy (1500+ hour immersive). UC Davis, B.S. Biology" },
-  { k: "Looking for", v: "Senior full-stack and integrations roles" },
+  { k: "Looking for", v: "Senior full-stack, product, and AI engineering roles" },
 ];
 
 function About() {
@@ -134,9 +135,9 @@ function About() {
         <div className="lg:pt-4">
           <ScrollReveal>
             <p className="max-w-[30ch] text-[clamp(1.75rem,3vw,2.6rem)] font-medium leading-[1.15] tracking-[-0.02em]">
-              I work on the layer most people never see: the part where your
-              product talks to Salesforce, QuickBooks, and a payment processor,
-              and the numbers still match at the end of the month.
+              I build products end to end: the screen a customer signs up and
+              pays on, the services behind it, and the AI tools that make the
+              work faster.
             </p>
           </ScrollReveal>
           <ScrollReveal delay={120}>
@@ -169,28 +170,10 @@ function About() {
 
 const SKILLS: Skill[] = [
   {
-    name: "SaaS integrations",
-    where: "CRETelligent, Radius platform",
-    proof:
-      "Built the layer between Radius and Salesforce: auto-push for proposals, vendor lifecycle sync with the Connect platform, Quire document routing, and sync that survives bulk loads.",
-  },
-  {
-    name: "HubSpot integrations",
-    where: "Senior Full Stack Software Engineer, Hive Strategy, March 2026 to present",
-    proof:
-      "Built new APIs and moved the integration servers to AWS. Took over production syncs into HubSpot from SchoolMint, Infinite Campus, NetSuite, and SFTP feeds: designed observability across services, put every bulk data change behind a dry run or a rollback log, and removed the failure behind about 6,900 rejected upserts per run.",
-  },
-  {
     name: "Payments and billing",
     where: "CRETelligent, Q1 to Q2 2026",
     proof:
       "Designed self-service subscriptions and built the payment side: USAePay integration with credit-card surcharge logic, a Starter monthly tier, legal-terms gating, and asynchronous payment orchestration. It brought in 10+ new self-serve customers a month and $150K a year in additional revenue.",
-  },
-  {
-    name: "Data sync and reconciliation",
-    where: "CRETelligent, QuickBooks pipeline",
-    proof:
-      "Mapped subscription titles to QuickBooks products, synced invoices from the asynchronous order flow, and reconciled USAePay payments against the books, saving accounting about 15 hours a month.",
   },
   {
     name: "Full-stack features",
@@ -199,22 +182,40 @@ const SKILLS: Skill[] = [
       "Built Teams Management end to end: a React UI with a RadiusMap component in order-tracker, plus a Java TeamDao with full CRUD and admin-role permissions.",
   },
   {
+    name: "LLM orchestration",
+    where: "transcript-insights, open source",
+    proof:
+      "Three Claude agents run in parallel, each validated against a Zod schema with targeted retries, then checked against the transcript so no quote or deadline is invented.",
+  },
+  {
     name: "Shipping under pressure",
     where: "CRETelligent, June 2026",
     proof:
       "When Google Maps deprecated its Drawing Library, I restored parcel drawing for customers the same day (pinned the Maps JS API, added backend alerting), then led the rebuild across three services in four days.",
   },
   {
+    name: "HubSpot integrations",
+    where: "Senior Full Stack Software Engineer, Hive Strategy, March 2026 to present",
+    proof:
+      "Built new APIs and moved the integration servers to AWS. Took over production syncs into HubSpot from SchoolMint, Infinite Campus, NetSuite, and SFTP feeds: designed observability across services, put every bulk data change behind a dry run or a rollback log, and removed the failure behind about 6,900 rejected upserts per run.",
+  },
+  {
+    name: "SaaS integrations",
+    where: "CRETelligent, Radius platform",
+    proof:
+      "Built the layer between Radius and Salesforce: auto-push for proposals, vendor lifecycle sync with the Connect platform, Quire document routing, and sync that survives bulk loads.",
+  },
+  {
+    name: "Data sync and reconciliation",
+    where: "CRETelligent, QuickBooks pipeline",
+    proof:
+      "Mapped subscription titles to QuickBooks products, synced invoices from the asynchronous order flow, and reconciled USAePay payments against the books, saving accounting about 15 hours a month.",
+  },
+  {
     name: "Data consistency",
     where: "CRETelligent, Salesforce integration",
     proof:
       "Extended the Salesforce integration with triggers across the order tracker, and added optimistic locking with a version number so concurrent updates can't overwrite newer data.",
-  },
-  {
-    name: "LLM orchestration",
-    where: "transcript-insights, open source",
-    proof:
-      "Three Claude agents run in parallel, each validated against a Zod schema with targeted retries, then checked against the transcript so no quote or deadline is invented.",
   },
   {
     name: "Code review",
@@ -301,16 +302,6 @@ function Stack() {
 
 const SPECIALTIES: Specialty[] = [
   {
-    title: "Connect products to the systems they run on",
-    body: "CRMs, ERPs, school enrollment systems, document tools, parcel data, and email, synced on schedules and resilient to bulk loads.",
-    nodes: ["salesforce", "hubspot", "schoolmint", "infinitecampus", "netsuite", "quire", "regrid", "pendo", "mailgun"],
-  },
-  {
-    title: "Move money correctly",
-    body: "Card payments, surcharges, subscription tiers, and invoices that reconcile with accounting.",
-    nodes: ["usaepay", "quickbooks"],
-  },
-  {
     title: "Own features end to end",
     body: "From React and TypeScript screens to Java/Spring services, async flows, and the database underneath.",
     nodes: "all",
@@ -319,6 +310,16 @@ const SPECIALTIES: Specialty[] = [
     title: "Build AI tools that check their own work",
     body: "Claude agents with schema validation, retries, and grounding checks, wired together with hooks, skills, and MCP servers.",
     nodes: ["claude"],
+  },
+  {
+    title: "Move money correctly",
+    body: "Card payments, surcharges, subscription tiers, and invoices that reconcile with accounting.",
+    nodes: ["usaepay", "quickbooks"],
+  },
+  {
+    title: "Connect products to the systems they run on",
+    body: "CRMs, ERPs, school enrollment systems, document tools, parcel data, and email, synced on schedules and resilient to bulk loads.",
+    nodes: ["salesforce", "hubspot", "schoolmint", "infinitecampus", "netsuite", "quire", "regrid", "pendo", "mailgun"],
   },
 ];
 
@@ -614,7 +615,7 @@ function Contact() {
         </ScrollReveal>
         <ScrollReveal delay={100}>
           <p className="mt-8 max-w-[40ch] text-xl leading-relaxed">
-            I&apos;m open to senior full-stack and integrations roles. Email is the fastest way to reach me.
+            I&apos;m open to senior full-stack, product, and AI engineering roles. Email is the fastest way to reach me.
           </p>
         </ScrollReveal>
         <ScrollReveal delay={160}>

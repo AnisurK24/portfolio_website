@@ -12,11 +12,11 @@ Recruiters screening candidates and hiring engineers evaluating technical depth.
 
 ## Product Purpose
 
-Personal portfolio for Anisur Khan, a full-stack engineer (5+ years) specializing in SaaS integrations and AI tooling. Success is a visitor who understands his specialty within seconds and emails him or downloads the resume.
+Personal portfolio for Anisur Khan, a full-stack engineer (5+ years) targeting full-stack, product engineering, and AI engineering roles. Success is a visitor who understands what he builds within seconds and emails him or downloads the resume.
 
 ## Positioning
 
-The integration layer between SaaS products (Salesforce, QuickBooks, HubSpot, USAePay, Quire, Regrid, Pendo, Mailgun) on React + Java/Spring services, plus hands-on Claude-based AI tooling. The site carries a live Claude chat grounded in his resume, which demonstrates the AI claim rather than asserting it.
+Full-stack product engineering on React, Node.js and Java/Spring (self-service sign-up and payments, team management, production integrations with Salesforce, QuickBooks, HubSpot and USAePay), plus hands-on Claude-based AI tooling. Integrations are proof of depth, not the headline. The site carries a live Claude chat grounded in his resume, which demonstrates the AI claim rather than asserting it.
 
 ## Capabilities and Constraints
 
@@ -31,7 +31,7 @@ The integration layer between SaaS products (Salesforce, QuickBooks, HubSpot, US
 - `public/Anisur_Khan_Resume.pdf`.
 - Public repo: github.com/AnisurK24/transcript-insights (71 tests).
 - CRETelligent work is private: no screenshots, no client names beyond integrations listed.
-- 2026 HubSpot integration contract work. Shown as "contract work" only: never name the agency or its clients.
+- Current role: Senior Full Stack Software Engineer at Hive Strategy (March 2026 to present). Name the agency; never name its clients (schools or school networks).
 - No testimonials, no metrics beyond those in context.ts. Do not invent any.
 
 ## Brand Commitments
