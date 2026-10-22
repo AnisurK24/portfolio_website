@@ -369,21 +369,6 @@ const PROJECTS: Project[] = [
     tint: "#2a2724",
   },
   {
-    title: "transcript-insights",
-    context: "Open source, TypeScript",
-    summary:
-      "A meeting transcript analyzer where three Claude agents read the same transcript in parallel, in about ten seconds.",
-    points: [
-      "Agents for decisions and action items, business context, and interpersonal dynamics",
-      "Zod schema validation, with the exact error fed back to the model on retry",
-      "Grounding check: invented quotes, people, or deadlines get sent back for correction",
-      "71 tests, an architecture doc, and committed sample output",
-    ],
-    tags: ["TypeScript", "Claude API", "Zod", "Multi-agent"],
-    links: [{ label: "Source", href: "https://github.com/AnisurK24/transcript-insights" }],
-    tint: "#1f2b28",
-  },
-  {
     title: "CRM and accounting integration layer",
     context: "CRETelligent, Radius platform, 2020 to 2026",
     summary:
@@ -415,6 +400,21 @@ const PROJECTS: Project[] = [
     tags: ["Node.js", "HubSpot API", "HubSpot UI extensions", "SchoolMint", "Infinite Campus", "NetSuite", "SFTP", "AWS"],
     note: "Client codebases, private",
     tint: "#2b2f35",
+  },
+  {
+    title: "transcript-insights",
+    context: "Open source, TypeScript",
+    summary:
+      "A meeting transcript analyzer where three Claude agents read the same transcript in parallel, in about ten seconds.",
+    points: [
+      "Agents for decisions and action items, business context, and interpersonal dynamics",
+      "Zod schema validation, with the exact error fed back to the model on retry",
+      "Grounding check: invented quotes, people, or deadlines get sent back for correction",
+      "71 tests, an architecture doc, and committed sample output",
+    ],
+    tags: ["TypeScript", "Claude API", "Zod", "Multi-agent"],
+    links: [{ label: "Source", href: "https://github.com/AnisurK24/transcript-insights" }],
+    tint: "#1f2b28",
   },
   {
     title: "Claude Code automation system",
