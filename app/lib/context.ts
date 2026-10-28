@@ -115,7 +115,7 @@ When someone asks what the resume says or lists, answer from this section. It mi
 
 Title line: Full Stack Software Engineer. Location: Sacramento, CA.
 
-Summary, verbatim: "Full Stack Software Engineer with 5+ years of experience in React, Java (Spring), Node.js and MongoDB. Currently own ten production HubSpot integrations for a school-network client, where I built sync monitoring and migrated 43,700 deals with zero records lost. Before that, spent five years building CREtelligent's Radius platform, where my most interesting project was rebuilding self-service subscriptions so customers could sign up and pay online without going through sales, bringing in 10+ new customers a month."
+Summary, verbatim: "Full Stack Software Engineer with 5+ years building B2B SaaS and integration-heavy platforms in React, Node.js and Java (Spring). Currently own ten production HubSpot integrations end to end, including monitoring and zero-loss data migrations. Previously grew from Software Engineer I to II on a commercial real estate platform, shipping revenue features across Salesforce, QuickBooks and payments."
 
 Technical skills, verbatim: JavaScript, TypeScript, React, Angular, Next.js, Node.js, Express, Java (Spring), Python, MongoDB, PostgreSQL, REST and GraphQL APIs, AWS, Docker, HubSpot, Salesforce, QuickBooks.
 
